@@ -7,7 +7,7 @@ My OS X Dotfiles.
 First of all, install the following with [Homebrew](https://brew.sh/).
 
 ```sh
-$ brew install zsh zsh-completion vim tmux reattach-to-user-namespace the_silver_searcher fzf ripgrep clang-format peco ghq hub
+$ brew install zsh zsh-completion vim tmux reattach-to-user-namespace the_silver_searcher fzf ripgrep clang-format peco ghq gh
 ```
 
 Then clone the repogitory with [ghq](https://github.com/x-motemen/ghq)
