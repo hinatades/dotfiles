@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 print_header() {
       printf "\e[32m"
@@ -67,8 +67,8 @@ done
 # Install zsh themes
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 # Install zsh autosuggestion with oh-my-zsh
+source .zshrc
 git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
-
 # Install vim-plug
 # https://github.com/junegunn/vim-plug
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
