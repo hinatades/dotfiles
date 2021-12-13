@@ -47,6 +47,7 @@ SECRET_DOT_FILES=(
     .gitconfig
     .aws
     .ssh
+    .zsh_history
 )
 
 for file in ${SECRET_DOT_FILES[@]}
