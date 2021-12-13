@@ -168,7 +168,7 @@ bindkey '^[' peco-src
 function peco-src-hub () {
   local selected_dir=$(ghq list | peco --query "$LBUFFER" | cut -d "/" -f 2,3)
   if [ -n "$selected_dir" ]; then
-    BUFFER="hub browse ${selected_dir}"
+    BUFFER="gh repo view --web ${selected_dir}"
     zle accept-line
   fi
   zle clear-screen
@@ -177,7 +177,6 @@ zle -N peco-src-hub
 bindkey '^]' peco-src-hub
 
 
-function git(){hub "$@"}
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
