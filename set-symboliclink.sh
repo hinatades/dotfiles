@@ -66,8 +66,9 @@ do
 done
 # Install zsh themes
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-# Install zsh autosuggestion with oh-my-zsh
+# Set env vars
 source .zshrc
+# Install zsh autosuggestion with oh-my-zsh
 git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
 # Install vim-plug
 # https://github.com/junegunn/vim-plug
