@@ -14,9 +14,11 @@ export GOPATH=$HOME/.go
 export PATH=$GOPATH/bin:$PATH
 
 # Python
-export PYENV_ROOT="$HOME/.pyenv/shims"
-export PATH="$PYENV_ROOT/bin:$PATH"
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/shims:$PATH"
 eval "$(pyenv init -)"
+# Poetry
+export PATH="$HOME/.local/bin:$PATH"
 
 # Ruby
 export PATH="$HOME/.rbenv/bin:$PATH"
@@ -25,6 +27,11 @@ export PATH=LOCAL_PATH:$PATH
 
 # Github CLI
 export GITHUB_EDITOR="vim"
+
+# Kubenetes
+autoload -Uz compinit
+compinit
+source <(kubectl completion zsh)  # setup autocomplete in zsh into the current shell
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
@@ -37,8 +44,6 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
 
-alias speedtest='/usr/local/bin/speedtest'
-alias e="emacs"
 alias a="./a.out"
 alias A="c++ A.cpp -std=c++17"
 alias B="c++ B.cpp -std=c++17"
@@ -46,6 +51,10 @@ alias C="c++ C.cpp -std=c++17"
 alias D="c++ D.cpp -std=c++17"
 alias E="c++ E.cpp -std=c++17"
 alias F="c++ F.cpp -std=c++17"
+alias k=kubectl
+complete -F __start_kubectl k
+
+
 
 function peco-select-history() {
     # historyを番号なし、逆順、最初から表示。
