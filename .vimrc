@@ -245,6 +245,7 @@ Plug 'jremmen/vim-ripgrep'
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'joshdick/onedark.vim', {'do': 'cp colors/* ~/.vim/colors/'}
+Plug 'sheerun/vim-polyglot'
 Plug 'itchyny/lightline.vim'
 Plug 'fatih/vim-go'
 Plug 'airblade/vim-gitgutter'
