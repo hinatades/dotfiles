@@ -1,6 +1,5 @@
 export PATH=/usr/local/bin:$PATH
-export LC_CTYPE=ja_JP.UTF-8
-export LANG=en_US.UTF-8
+
 # Clangd
 export PATH="/usr/local/opt/llvm/bin:$PATH"
 # Node.js

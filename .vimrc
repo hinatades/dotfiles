@@ -245,7 +245,6 @@ Plug 'jremmen/vim-ripgrep'
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'joshdick/onedark.vim', {'do': 'cp colors/* ~/.vim/colors/'}
-Plug 'sheerun/vim-polyglot'
 Plug 'itchyny/lightline.vim'
 Plug 'fatih/vim-go'
 Plug 'airblade/vim-gitgutter'
@@ -271,14 +270,6 @@ Plug 'hashivim/vim-terraform'
 
 " GraphQL
 Plug 'jparise/vim-graphql'
-
-" Markdown
-Plug 'tpope/vim-markdown'
-Plug 'kannokanno/previm'
-Plug 'tyru/open-browser.vim'
-
-" Re:VIEW
-Plug 'tokorom/vim-review'
 
 " PlantUML
 Plug 'aklt/plantuml-syntax'
