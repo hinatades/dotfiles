@@ -6,5 +6,8 @@
       "disableWorkspaceFolders": true,
       "filetypes": ["go"]
     }
+  },
+  "yaml.schemas": {
+      "kubernetes": "/*.yaml"
   }
 }
