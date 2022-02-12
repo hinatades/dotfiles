@@ -101,3 +101,18 @@ fvim() {
   selected_files=$(echo "$files" | fzf -m --preview 'head -100 {}') &&
   vim $selected_files
 }
+
+function ide() {
+    tmux split-window -v -p 15
+    cd
+    tmux select-pane -U
+    sleep 0.3
+    tmux split-window -h
+    cd
+    tmux select-pane -R
+}
+alias ide=ide
+
+if [ $SHLVL = 1 ]; then
+  tmux
+fi
