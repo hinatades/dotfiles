@@ -7,7 +7,7 @@ export PATH=$HOME/.nodebrew/current/bin:$PATH
 # Golang
 export GOENV_ROOT=$HOME/.goenv
 export PATH=$GOENV_ROOT/bin:$PATH
-# GOENV_DISABLE_GOPATH=1
+GOENV_DISABLE_GOPATH=1
 eval "$(goenv init -)"
 export GOPATH=$HOME/.go
 export PATH=$GOPATH/bin:$PATH
@@ -52,8 +52,6 @@ alias E="c++ E.cpp -std=c++17"
 alias F="c++ F.cpp -std=c++17"
 alias k=kubectl
 complete -F __start_kubectl k
-
-
 
 function peco-select-history() {
     # historyを番号なし、逆順、最初から表示。
@@ -103,16 +101,33 @@ fvim() {
 }
 
 function ide() {
+    tmux send-keys -R
     tmux split-window -v -p 15
-    cd
     tmux select-pane -U
-    sleep 0.3
     tmux split-window -h
-    cd
     tmux select-pane -R
 }
 alias ide=ide
+alias e=exit
 
 if [ $SHLVL = 1 ]; then
   tmux
 fi
+export XDG_CONFIG_HOME=$HOME/.config
+export PATH="/usr/local/opt/libpq/bin:$PATH"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/hinatades/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/hinatades/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/hinatades/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/hinatades/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+

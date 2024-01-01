@@ -44,6 +44,10 @@ inoremap {<Enter> {}<Left><CR><ESC><S-o>
 inoremap [<Enter> []<Left><CR><ESC><S-o>
 inoremap (<Enter> ()<Left><CR><ESC><S-o>
 
+" 削除キーでyankしない
+nnoremap x "_x
+nnoremap d "_d
+nnoremap D "_D
 
 " エラーメッセージの表示時にビープを鳴らさない
 set noerrorbells
@@ -187,6 +191,14 @@ endfunction
 command Atcoder :call Atcoder()
 command! Hello echo 'Hello, world!'
 
+function! FormatWithBlack()
+    let l:current_view = winsaveview()
+    execute '%!black -q -'
+    call winrestview(l:current_view)
+endfunction
+command! Black call FormatWithBlack()
+autocmd BufWritePre *.py call FormatWithBlack()
+
 " Golang
 let g:go_null_module_warning = 0
 let g:go_fmt_command = "goimports"
@@ -206,6 +218,7 @@ let g:terraform_fmt_on_save=1
 let g:previm_open_cmd = 'open -a Google\ Chrome'
 " <ctrl>-p Preview
 nnoremap <silent> <C-p> :PrevimOpen<CR>
+let g:previm_enable_realtime = 1
 
 " Re:VIEW
 let g:vim_review#include_filetypes = ['python']
@@ -236,6 +249,10 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 "What is autocmd?
 autocmd BufNewFile,BufRead *.tsx let b:tsx_ext_found = 1
 autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
+
+
+" https://qiita.com/rild/items/ccbf7c7ac9cecd1fc32d
+noremap! <C-?> <C-h>
 
 call plug#begin('~/.vim/plugged')
 
@@ -273,5 +290,10 @@ Plug 'jparise/vim-graphql'
 
 " PlantUML
 Plug 'aklt/plantuml-syntax'
+
+Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build', 'branch': 'main' }
+Plug 'rust-lang/rust.vim'
+
+Plug 'previm/previm'
 
 call plug#end()
