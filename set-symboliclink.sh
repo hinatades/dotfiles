@@ -47,7 +47,7 @@ do
         if [ -f "$HOME/$file" ]; then
             cp "$HOME/$file" "$HOME/$file.bak"
             rm "$HOME/$file"
-        elif [ -d $HOME/$file ]; then
+        elif [ -d "$HOME/$file" ]; then
             sudo cp -r $HOME/$file "$HOME/$file.bak"
             sudo rm -r $HOME/$file
         fi
