@@ -41,7 +41,7 @@ if [ -e "$NVIM_CONFIG_DIR" ]; then
 fi
 ln -f -s "$DOTFILES_NVIM_DIR" "$NVIM_CONFIG_DIR"
 
-for file in ${DOT_FILES[@]}
+for file in "${DOT_FILES[@]}"
 do
     if [ -e $HOME/$file ]; then
         if [ -f $HOME/$file ]; then
