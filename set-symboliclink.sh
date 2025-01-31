@@ -48,7 +48,7 @@ do
             cp "$HOME/$file" "$HOME/$file.bak"
             rm "$HOME/$file"
         elif [ -d "$HOME/$file" ]; then
-            sudo cp -r $HOME/$file "$HOME/$file.bak"
+            sudo cp -r "$HOME/$file" "$HOME/$file.bak"
             sudo rm -r $HOME/$file
         fi
         echo "Took a backup of $HOME/$file"
