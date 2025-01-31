@@ -43,7 +43,7 @@ ln -f -s "$DOTFILES_NVIM_DIR" "$NVIM_CONFIG_DIR"
 
 for file in "${DOT_FILES[@]}"
 do
-    if [ -e $HOME/$file ]; then
+    if [ -e "$HOME/$file" ]; then
         if [ -f $HOME/$file ]; then
             cp $HOME/$file "$HOME/$file.bak"
             rm $HOME/$file
