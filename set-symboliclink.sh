@@ -30,7 +30,7 @@ DOT_FILES=(
 
 # Handle .config/nvim separately
 NVIM_CONFIG_DIR="$HOME/.config/nvim"
-DOTFILES_NVIM_DIR="$HOME/ghq/github.com/hinatades/dotfiles/.config/nvim"
+DOTFILES_NVIM_DIR="$HOME/ghq/github.com/hinatades/dotfiles/nvim"
 
 if [ -e "$NVIM_CONFIG_DIR" ]; then
     if [ -d "$NVIM_CONFIG_DIR" ]; then
