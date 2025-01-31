@@ -39,6 +39,9 @@ set incsearch
 " 検索結果をハイライト表示
 set hlsearch
 
+" ステータスラインに現在のファイルのフルパス表示
+set statusline+=%F
+
 " カッコの自動補完
 inoremap {<Enter> {}<Left><CR><ESC><S-o>
 inoremap [<Enter> []<Left><CR><ESC><S-o>
@@ -197,7 +200,6 @@ function! FormatWithBlack()
     call winrestview(l:current_view)
 endfunction
 command! Black call FormatWithBlack()
-autocmd BufWritePre *.py call FormatWithBlack()
 
 " Golang
 let g:go_null_module_warning = 0
@@ -250,6 +252,8 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 autocmd BufNewFile,BufRead *.tsx let b:tsx_ext_found = 1
 autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
 
+autocmd VimEnter * Copilot enable
+
 
 " https://qiita.com/rild/items/ccbf7c7ac9cecd1fc32d
 noremap! <C-?> <C-h>
@@ -295,5 +299,8 @@ Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build'
 Plug 'rust-lang/rust.vim'
 
 Plug 'previm/previm'
+Plug 'github/copilot.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'CopilotC-Nvim/CopilotChat.nvim'
 
 call plug#end()
