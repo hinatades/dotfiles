@@ -39,7 +39,7 @@ if [ -e "$NVIM_CONFIG_DIR" ]; then
     fi
     echo "Took a backup of $NVIM_CONFIG_DIR"
 fi
-ln -f -s "$HOME/ghq/github.com/hinatades/dotfiles/.config/nvim" "$NVIM_CONFIG_DIR"
+ln -f -s "$HOME/ghq/github.com/hinatades/dotfiles/nvim" "$NVIM_CONFIG_DIR"
 
 for file in "${DOT_FILES[@]}"
 do
