@@ -29,14 +29,17 @@ DOT_FILES=(
 )
 
 # Handle .config/nvim separately
-if [ -e $HOME/.config/nvim ]; then
-    if [ -d $HOME/.config/nvim ]; then
-        sudo cp -r $HOME/.config/nvim "$HOME/.config/nvim.bak"
-        sudo rm -r $HOME/.config/nvim
+NVIM_CONFIG_DIR="$HOME/.config/nvim"
+DOTFILES_NVIM_DIR="$HOME/ghq/github.com/hinatades/dotfiles/.config/nvim"
+
+if [ -e "$NVIM_CONFIG_DIR" ]; then
+    if [ -d "$NVIM_CONFIG_DIR" ]; then
+        cp -r "$NVIM_CONFIG_DIR" "$NVIM_CONFIG_DIR.bak"
+        rm -r "$NVIM_CONFIG_DIR"
     fi
-    echo "Took a backup of $HOME/.config/nvim"
+    echo "Took a backup of $NVIM_CONFIG_DIR"
 fi
-ln -f -s $HOME/ghq/github.com/hinatades/dotfiles/.config/nvim $HOME/.config/nvim
+ln -f -s "$DOTFILES_NVIM_DIR" "$NVIM_CONFIG_DIR"
 
 for file in ${DOT_FILES[@]}
 do
