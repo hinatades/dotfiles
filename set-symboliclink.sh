@@ -26,8 +26,17 @@ DOT_FILES=(
     .vimrc
     .zshrc
     .tmux.conf
-    .config/nvim
 )
+
+# Handle .config/nvim separately
+if [ -e $HOME/.config/nvim ]; then
+    if [ -d $HOME/.config/nvim ]; then
+        sudo cp -r $HOME/.config/nvim "$HOME/.config/nvim.bak"
+        sudo rm -r $HOME/.config/nvim
+    fi
+    echo "Took a backup of $HOME/.config/nvim"
+fi
+ln -f -s $HOME/ghq/github.com/hinatades/dotfiles/.config/nvim $HOME/.config/nvim
 
 for file in ${DOT_FILES[@]}
 do
