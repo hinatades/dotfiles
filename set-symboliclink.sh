@@ -64,7 +64,16 @@ do
     fi
     ln -f -s $HOME/Dropbox/$file $HOME/$file
 done
-# Install zsh themes
+# Handle .config/nvim separately
+NVIM_DIR="$HOME/.config/nvim"
+if [ -e $NVIM_DIR ]; then
+    if [ -d $NVIM_DIR ]; then
+        sudo cp -r $NVIM_DIR "$NVIM_DIR.bak"
+        sudo rm -r $NVIM_DIR
+    fi
+    echo "Took a backup of $NVIM_DIR"
+fi
+ln -f -s $HOME/ghq/github.com/hinatades/dotfiles/nvim $NVIM_DIR
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 # Set env vars
 source .zshrc
