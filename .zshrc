@@ -24,6 +24,14 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 export PATH=LOCAL_PATH:$PATH
 
+# mysql
+export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+
+# Claude
+export AWS_REGION=ap-northeast-1
+export CLAUDE_CODE_USE_BEDROCK=1
+export ANTHROPIC_MODEL='global.anthropic.claude-sonnet-4-5-20250929-v1:0'
+
 # Github CLI
 export GITHUB_EDITOR="vim"
 
@@ -116,10 +124,15 @@ fi
 export XDG_CONFIG_HOME=$HOME/.config
 export PATH="/usr/local/opt/libpq/bin:$PATH"
 
-source "$HOME/.rye/env"
+# source "$HOME/.rye/env"
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/hinatades/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/hinatades/Downloads/google-cloud-sdk/path.zsh.inc'; fi
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/hinatades/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/hinatades/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/hinatades/.lmstudio/bin"
+# End of LM Studio CLI section
+
