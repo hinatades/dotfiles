@@ -46,6 +46,7 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
 
+alias vim=nvim
 alias a="./a.out"
 alias A="c++ A.cpp -std=c++17"
 alias B="c++ B.cpp -std=c++17"
