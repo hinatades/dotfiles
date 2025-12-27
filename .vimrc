@@ -12,7 +12,6 @@
 
 " ファイルを上書きする前にバックアップを作ることを無効化
 set nowritebackup
-" ファイルを上書きする前にバックアップを作ることを無効化
 set nobackup
 " vim の矩形選択で文字が無くても右へ進める
 set virtualedit=block
@@ -137,22 +136,6 @@ autocmd ColorScheme * highlight LineNr ctermfg=240
 autocmd ColorScheme * highlight Normal ctermbg=none
 autocmd ColorScheme * highlight LineNr ctermbg=none
 
-" Cursor
-"SI = INSERT mode
-"SR = REPLACE mode
-"EI = NORMAL mode (ELSE)
-
-" Other options (replace the number after \e[):
-" Ps = 0  -> blinking block.
-" Ps = 1  -> blinking block (default).
-" Ps = 2  -> steady block.
-" Ps = 3  -> blinking underline.
-" Ps = 4  -> steady underline.
-" Ps = 5  -> blinking bar (xterm).
-" Ps = 6  -> steady bar (xterm).
-" let &t_SI = "\e[5 q"
-" let &t_EI = "\e[3 q"
-
 syntax on
 colorscheme onedark
 
@@ -192,7 +175,6 @@ function! Atcoder()
               \ ])
 endfunction
 command Atcoder :call Atcoder()
-command! Hello echo 'Hello, world!'
 
 function! FormatWithBlack()
     let l:current_view = winsaveview()
@@ -232,7 +214,7 @@ let g:clang_format#style_options = {
             \ "AlignTrailingComments": "true"}
 
 " PlantUML
-let g:plantuml_executable_script="~/dotfiles/plantuml.sh"
+let g:plantuml_executable_script="$HOME/ghq/github.com/hinatades/dotfiles/plantuml.sh"
 
 " Ag
 " Remove file names form the search results
@@ -248,7 +230,7 @@ nmap <silent> gr <Plug>(coc-references)
 nmap <space>d :CocCommand explorer <CR>
 " :Prettier to format current buffer.
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
-"What is autocmd?
+
 autocmd BufNewFile,BufRead *.tsx let b:tsx_ext_found = 1
 autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
 
@@ -296,7 +278,6 @@ Plug 'jparise/vim-graphql'
 Plug 'aklt/plantuml-syntax'
 
 Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build', 'branch': 'main' }
-Plug 'rust-lang/rust.vim'
 
 Plug 'previm/previm'
 Plug 'github/copilot.vim'
