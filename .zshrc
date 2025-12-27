@@ -19,11 +19,6 @@ eval "$(pyenv init -)"
 # Poetry
 export PATH="$HOME/.local/bin:$PATH"
 
-# Ruby
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-export PATH=LOCAL_PATH:$PATH
-
 # mysql
 export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 
@@ -62,41 +57,56 @@ alias F="c++ F.cpp -std=c++17"
 alias k=kubectl
 complete -F __start_kubectl k
 
-function peco-select-history() {
-    # historyを番号なし、逆順、最初から表示。
-    # 順番を保持して重複を削除。
-    # カーソルの左側の文字列をクエリにしてpecoを起動
-    # \nを改行に変換
-    BUFFER="$(\history -nr 1 | awk '!a[$0]++' | peco --query "$LBUFFER" | sed 's/\\n/\n/')"
-    CURSOR=$#BUFFER             # カーソルを文末に移動
-    zle -R -c                   # refresh
-}
-zle -N peco-select-history
-bindkey '^@' peco-select-history
+# fzf history
+function fzf-select-history() {
+  local history selected
 
-# peco+ghq
-function peco-src () {
-  local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
-  if [ -n "$selected_dir" ]; then
+  history=$(history -nr 1 | awk '!a[$0]++')
+  [[ -z "$history" ]] && return 0
+
+  selected=$(print -r -- "$history" | fzf --query "$LBUFFER") || return 0
+  BUFFER="${selected//\\n/$'\n'}"
+  CURSOR=$#BUFFER
+  zle -R -c
+}
+zle -N fzf-select-history
+bindkey '^@' fzf-select-history
+
+
+# fzf + ghq
+function fzf-src() {
+  local list selected_dir
+
+  list=$(ghq list -p)
+  [[ -z "$list" ]] && return 0
+
+  selected_dir=$(print -r -- "$list" | fzf --query "$LBUFFER") || return 0
+  [[ -n "$selected_dir" ]] && {
     BUFFER="cd ${selected_dir}"
     zle accept-line
-  fi
+  }
   zle clear-screen
 }
-zle -N peco-src
-bindkey '^[' peco-src
+zle -N fzf-src
+bindkey '^[' fzf-src
 
-# peco+ghq+hub
-function peco-src-hub () {
-  local selected_dir=$(ghq list | peco --query "$LBUFFER" | cut -d "/" -f 2,3)
-  if [ -n "$selected_dir" ]; then
+
+# fzf + ghq + hub
+function fzf-src-hub() {
+  local list selected_dir
+
+  list=$(ghq list)
+  [[ -z "$list" ]] && return 0
+
+  selected_dir=$(print -r -- "$list" | fzf --query "$LBUFFER" | cut -d "/" -f 2,3) || return 0
+  [[ -n "$selected_dir" ]] && {
     BUFFER="gh repo view --web ${selected_dir}"
     zle accept-line
-  fi
+  }
   zle clear-screen
 }
-zle -N peco-src-hub
-bindkey '^]' peco-src-hub
+zle -N fzf-src-hub
+bindkey '^]' fzf-src-hub
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -125,15 +135,13 @@ fi
 export XDG_CONFIG_HOME=$HOME/.config
 export PATH="/usr/local/opt/libpq/bin:$PATH"
 
-# source "$HOME/.rye/env"
+# Google Cloud SDK
+if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then
+  . "$HOME/google-cloud-sdk/path.zsh.inc"
+fi
+if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then
+  . "$HOME/google-cloud-sdk/completion.zsh.inc"
+fi
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/hinatades/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/hinatades/Downloads/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/hinatades/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/hinatades/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
-
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/hinatades/.lmstudio/bin"
-# End of LM Studio CLI section
-
+# LM Studio CLI
+export PATH="$PATH:$HOME/.lmstudio/bin"
