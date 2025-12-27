@@ -3,7 +3,10 @@ return {
   {
     "ray-x/go.nvim",
     dependencies = {
-      "ray-x/guihua.lua",
+      {
+        "ray-x/guihua.lua",
+        build = "cd lua/fzy && make",
+      },
       "neovim/nvim-lspconfig",
       "nvim-treesitter/nvim-treesitter",
     },
@@ -12,9 +15,6 @@ return {
         -- Migrated from .vimrc
         goimports = "goimports",
         gofmt = "goimports",
-        linter = { "golangci-lint" },
-        linter_flags = { "--enable=errcheck" },
-        null_ls_document_formatting_disable = false,
       })
     end,
     event = { "CmdlineEnter" },
@@ -88,10 +88,4 @@ return {
     end,
   },
 
-  -- Python Black formatter
-  {
-    "psf/black",
-    ft = "python",
-    build = ":BlackUpgrade",
-  },
 }
