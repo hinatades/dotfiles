@@ -36,3 +36,6 @@ vim.opt.spelllang = { "en" }  -- 英語のみ
 vim.opt.autoread = true  -- ファイルが外部で変更されたら自動的に読み込む
 vim.opt.foldenable = false
 vim.opt.whichwrap = "b,s,h,l,<,>,[,],~"
+
+-- Disable conceal for Markdown (show raw syntax)
+vim.opt.conceallevel = 0  -- Markdownのconceal機能を無効化（構文を常に表示）
