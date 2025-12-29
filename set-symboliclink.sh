@@ -25,8 +25,6 @@ print_header
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
 
 DOT_FILES=(
-    .vim
-    .vimrc
     .zshrc
     .tmux.conf
 )
@@ -83,7 +81,3 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/mas
 source .zshrc
 # Install zsh autosuggestion with oh-my-zsh
 git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
-# Install vim-plug
-# https://github.com/junegunn/vim-plug
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-vim +":PlugInstall" +:q +:q
