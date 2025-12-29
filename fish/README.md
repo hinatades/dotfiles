@@ -28,6 +28,9 @@ chsh -s $(which fish)
 ```bash
 # このリポジトリのルートで実行
 ln -sf $(pwd)/fish ~/.config/fish
+
+# Starship設定（シンプルなプロンプトスタイル）
+ln -sf $(pwd)/starship.toml ~/.config/starship.toml
 ```
 
 ### 4. Fisher（プラグインマネージャー）のインストール
