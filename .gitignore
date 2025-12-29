@@ -9,3 +9,10 @@
 !.ghq/.gitkeep
 .aider*
 fish/fish_variables
+# Fisher installed plugins (managed by fish_plugins)
+fish/completions/fisher.fish
+fish/conf.d/
+fish/functions/fisher.fish
+fish/functions/_fzf_*.fish
+fish/functions/fzf_configure_bindings.fish
+fish/completions/fzf_configure_bindings.fish

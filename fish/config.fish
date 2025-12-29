@@ -74,8 +74,14 @@ alias k=kubectl
 alias e=exit
 
 # fzf.fish設定 (プラグインがインストールされている場合)
+# zshと同じキーバインドに設定
 if type -q fzf_configure_bindings
-    fzf_configure_bindings --directory=\e\[
-    fzf_configure_bindings --git_status=\e]
-    fzf_configure_bindings --history=\cT
+    # Ctrl+@（Ctrl+Space）: 履歴検索（zshと同じ）
+    fzf_configure_bindings --history=\c@
+    # その他の機能は無効化（カスタム関数を使用）
+    fzf_configure_bindings --directory=
+    fzf_configure_bindings --git_log=
+    fzf_configure_bindings --git_status=
+    fzf_configure_bindings --processes=
+    fzf_configure_bindings --variables=
 end

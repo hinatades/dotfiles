@@ -10,20 +10,7 @@ zshからfishへの移行用設定
 brew install fish
 ```
 
-### 2. fishをデフォルトシェルに設定
-
-```bash
-# fishのパスを確認
-which fish
-
-# /etc/shellsに追加（まだ登録されていない場合）
-echo $(which fish) | sudo tee -a /etc/shells
-
-# デフォルトシェルを変更
-chsh -s $(which fish)
-```
-
-### 3. 設定ファイルのシンボリックリンク作成
+### 2. 設定ファイルのシンボリックリンク作成
 
 ```bash
 # このリポジトリのルートで実行
@@ -34,35 +21,30 @@ ln -sf $(pwd)/fish ~/.config/fish
 ln -sf $(pwd)/starship.toml ~/.config/starship.toml
 ```
 
-**注意**: Starshipのテーマを反映させるには、ターミナルを再起動してください。
+**注意**:
+- WezTermの設定で自動的にfishが起動します（`chsh`不要）
+- Starshipのテーマを反映させるには、WezTermを再起動してください
 
-### 4. Fisher（プラグインマネージャー）のインストール
+### 3. Fisherとプラグインのインストール
 
 ```bash
+# Fisherをインストール
 curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
+
+# fish_pluginsから自動インストール
+fisher update
 ```
 
-### 5. 推奨プラグインのインストール
-
-```bash
-# fzf統合（最重要）
-fisher install PatrickF1/fzf.fish
-
-# z（ディレクトリジャンプ）
-fisher install jethrokuan/z
-
-# ghq統合
-fisher install decors/fish-ghq
-```
+これで以下のプラグインが自動的にインストールされます：
+- `PatrickF1/fzf.fish`: fzf統合（履歴検索など）
 
 ## 主な機能
 
-### キーバインド
+### キーバインド（zshと同じ）
 
-- `Ctrl+R`: 履歴検索（fzf.fish）
-- `Ctrl+[`: ghqリポジトリへcd
+- `Ctrl+@` (Ctrl+Space): 履歴検索（fzf.fish）
+- `Ctrl+[` (Esc): ghqリポジトリへcd
 - `Ctrl+]`: ghqリポジトリをブラウザで開く
-- `Ctrl+Alt+F`: ファイル検索（fzf.fish）
 
 ### カスタム関数
 
