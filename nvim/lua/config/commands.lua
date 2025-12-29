@@ -59,3 +59,16 @@ vim.api.nvim_create_user_command("Ag", function(opts)
     require("telescope.builtin").grep_string({ search = search_term })
   end
 end, { nargs = "?" })
+
+-- Fzf command for Telescope live_grep
+-- Usage: :Fzf [search_term]
+-- If no argument, opens interactive live grep
+-- If argument provided, searches for that term
+vim.api.nvim_create_user_command("Fzf", function(opts)
+  local search_term = opts.args
+  if search_term == "" then
+    require("telescope.builtin").live_grep()
+  else
+    require("telescope.builtin").grep_string({ search = search_term })
+  end
+end, { nargs = "?" })
