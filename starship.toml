@@ -1,0 +1,32 @@
+# oh-my-zsh simple theme replica
+
+format = """
+$directory\
+$git_branch\
+$custom\
+$character"""
+
+[directory]
+format = "[$path]($style)"
+style = "green"
+truncation_length = 100
+truncate_to_repo = false
+
+[git_branch]
+format = " [\\(](bold blue)[$branch](bold blue)"
+
+[custom.gitcheck]
+command = '''
+if git status --porcelain 2>/dev/null | grep -q .; then
+  printf "\033[31m✗\033[0m"
+else
+  printf "\033[32m✔\033[0m"
+fi
+'''
+when = "git rev-parse --git-dir 2>/dev/null"
+format = "$output"
+
+[character]
+format = "[\\)](bold blue) "
+success_symbol = ""
+error_symbol = ""

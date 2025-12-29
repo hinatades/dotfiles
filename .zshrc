@@ -1,10 +1,7 @@
 export PATH=/usr/local/bin:$PATH
 
-# oh-my-zsh
-export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="simple"
-plugins=(git zsh-autosuggestions)
-source $ZSH/oh-my-zsh.sh
+# Starship prompt (oh-my-zsh simple theme replica)
+eval "$(starship init zsh)"
 
 # Clangd
 export PATH="/usr/local/opt/llvm/bin:$PATH"
