@@ -76,6 +76,18 @@ if [ -e $NVIM_DIR ]; then
     echo "Took a backup of $NVIM_DIR"
 fi
 ln -f -s $SCRIPT_DIR/nvim $NVIM_DIR
+
+# Handle starship.toml
+STARSHIP_CONFIG="$HOME/.config/starship.toml"
+if [ -e $STARSHIP_CONFIG ]; then
+    if [ -f $STARSHIP_CONFIG ]; then
+        cp $STARSHIP_CONFIG "$STARSHIP_CONFIG.bak"
+        rm $STARSHIP_CONFIG
+    fi
+    echo "Took a backup of $STARSHIP_CONFIG"
+fi
+ln -f -s $SCRIPT_DIR/starship.toml $STARSHIP_CONFIG
+
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 # Set env vars
 source .zshrc
