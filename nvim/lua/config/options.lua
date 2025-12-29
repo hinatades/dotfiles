@@ -1,8 +1,17 @@
 -- Options are automatically loaded before lazy.nvim startup
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 
--- Custom cursor shape
-vim.opt.guicursor = "n-v-c-i-ci:hor20,r:hor20,o:hor20"
+-- Custom cursor shape (horizontal bar cursor)
+-- tmux-compatible cursor settings
+vim.opt.guicursor = "n-v-c:hor20,i-ci-ve:hor20,r-cr:hor20,o:hor20"
+
+-- Ensure cursor shape is restored when switching between tmux panes
+if vim.env.TMUX then
+  vim.cmd([[
+    autocmd VimEnter,VimResume * set guicursor=n-v-c:hor20,i-ci-ve:hor20,r-cr:hor20,o:hor20
+    autocmd VimLeave,VimSuspend * set guicursor=a:hor20
+  ]])
+end
 
 -- Display
 vim.opt.relativenumber = false  -- 相対行番号を無効化（通常の行番号のみ表示）
@@ -18,6 +27,10 @@ vim.opt.cinoptions:append(":0")
 
 -- Command line
 vim.opt.cmdheight = 2
+
+-- Spell check (disable for Japanese)
+vim.opt.spell = false  -- スペルチェックを無効化
+vim.opt.spelllang = { "en" }  -- 英語のみ
 
 -- Others
 vim.opt.autoread = true  -- ファイルが外部で変更されたら自動的に読み込む
