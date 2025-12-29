@@ -1,60 +1,32 @@
-# Starship Simple Configuration
+# oh-my-zsh simple theme replica
 
 format = """
-$username\
-$hostname\
 $directory\
 $git_branch\
-$git_status\
+$custom\
 $character"""
 
-[character]
-success_symbol = "[➜](bold green)"
-error_symbol = "[➜](bold red)"
-
 [directory]
-truncation_length = 3
-truncate_to_repo = true
-format = "[$path]($style) "
-style = "bold cyan"
+format = "[$path]($style)"
+style = "green"
+truncation_length = 100
+truncate_to_repo = false
 
 [git_branch]
-format = "[$symbol$branch]($style) "
-symbol = ""
-style = "bold purple"
+format = " [\\(](bold blue)[$branch](bold blue)"
 
-[git_status]
-format = '([\[$all_status$ahead_behind\]]($style) )'
-style = "bold yellow"
+[custom.gitcheck]
+command = '''
+if git status --porcelain 2>/dev/null | grep -q .; then
+  printf "\033[31m✗\033[0m"
+else
+  printf "\033[32m✔\033[0m"
+fi
+'''
+when = "git rev-parse --git-dir 2>/dev/null"
+format = "$output"
 
-[username]
-show_always = false
-format = "[$user]($style) "
-style_user = "bold yellow"
-
-[hostname]
-ssh_only = true
-format = "[$hostname]($style) "
-style = "bold green"
-
-# 不要なモジュールを無効化
-[aws]
-disabled = true
-
-[docker_context]
-disabled = true
-
-[nodejs]
-disabled = true
-
-[python]
-disabled = true
-
-[ruby]
-disabled = true
-
-[rust]
-disabled = true
-
-[golang]
-disabled = true
+[character]
+format = "[\\)](bold blue) "
+success_symbol = ""
+error_symbol = ""

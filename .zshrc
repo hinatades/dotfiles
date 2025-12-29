@@ -1,5 +1,8 @@
 export PATH=/usr/local/bin:$PATH
 
+# Starship prompt (oh-my-zsh simple theme replica)
+eval "$(starship init zsh)"
+
 # Clangd
 export PATH="/usr/local/opt/llvm/bin:$PATH"
 # Node.js
@@ -38,9 +41,6 @@ export GITHUB_EDITOR="nvim"
 autoload -Uz compinit
 compinit
 source <(kubectl completion zsh)  # setup autocomplete in zsh into the current shell
-
-# Starship prompt
-eval "$(starship init zsh)"
 
 # zsh-autosuggestions (Homebrew version)
 if [ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
@@ -131,9 +131,10 @@ function ide() {
 alias ide=ide
 alias e=exit
 
-if [ $SHLVL = 1 ]; then
-  tmux
-fi
+# tmux auto-start disabled
+# if [ $SHLVL = 1 ]; then
+#   tmux
+# fi
 export XDG_CONFIG_HOME=$HOME/.config
 export PATH="/usr/local/opt/libpq/bin:$PATH"
 

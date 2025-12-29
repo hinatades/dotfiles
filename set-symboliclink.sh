@@ -109,6 +109,7 @@ if [ -e $STARSHIP_CONFIG ]; then
     echo "Took a backup of $STARSHIP_CONFIG"
 fi
 ln -f -s $SCRIPT_DIR/starship.toml $STARSHIP_CONFIG
+
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 # Set env vars
 source .zshrc
