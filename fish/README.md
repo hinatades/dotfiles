@@ -29,9 +29,12 @@ chsh -s $(which fish)
 # このリポジトリのルートで実行
 ln -sf $(pwd)/fish ~/.config/fish
 
-# Starship設定（シンプルなプロンプトスタイル）
+# Starship設定（oh-my-zsh simple theme replica）
+# 緑色のディレクトリパス + 青色のブランチ名 + git状態(✔/✗)
 ln -sf $(pwd)/starship.toml ~/.config/starship.toml
 ```
+
+**注意**: Starshipのテーマを反映させるには、ターミナルを再起動してください。
 
 ### 4. Fisher（プラグインマネージャー）のインストール
 

@@ -8,3 +8,4 @@
 .ghq/*
 !.ghq/.gitkeep
 .aider*
+fish/fish_variables

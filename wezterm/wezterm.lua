@@ -2,6 +2,10 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
 config.automatically_reload_config = true
+
+-- デフォルトシェルをfishに設定
+config.default_prog = { "/opt/homebrew/bin/fish" }
+
 config.font = wezterm.font("HackGen35 Console NF")
 config.font_size = 18.0
 config.use_ime = true
