@@ -52,11 +52,17 @@ vim.api.nvim_create_autocmd("QuickFixCmdPost", {
 -- If no argument, opens interactive live grep
 -- If argument provided, searches for that term
 vim.api.nvim_create_user_command("Ag", function(opts)
+  local ok, builtin = pcall(require, "telescope.builtin")
+  if not ok then
+    vim.notify("Telescope is not installed", vim.log.levels.ERROR)
+    return
+  end
+
   local search_term = opts.args
   if search_term == "" then
-    require("telescope.builtin").live_grep()
+    builtin.live_grep()
   else
-    require("telescope.builtin").grep_string({ search = search_term })
+    builtin.grep_string({ search = search_term })
   end
 end, { nargs = "?" })
 
@@ -65,10 +71,16 @@ end, { nargs = "?" })
 -- If no argument, opens interactive live grep
 -- If argument provided, searches for that term
 vim.api.nvim_create_user_command("Fzf", function(opts)
+  local ok, builtin = pcall(require, "telescope.builtin")
+  if not ok then
+    vim.notify("Telescope is not installed", vim.log.levels.ERROR)
+    return
+  end
+
   local search_term = opts.args
   if search_term == "" then
-    require("telescope.builtin").live_grep()
+    builtin.live_grep()
   else
-    require("telescope.builtin").grep_string({ search = search_term })
+    builtin.grep_string({ search = search_term })
   end
 end, { nargs = "?" })
