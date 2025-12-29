@@ -77,6 +77,28 @@ if [ -e $NVIM_DIR ]; then
 fi
 ln -f -s $SCRIPT_DIR/nvim $NVIM_DIR
 
+# Handle .config/wezterm separately
+WEZTERM_DIR="$HOME/.config/wezterm"
+if [ -e $WEZTERM_DIR ]; then
+    if [ -d $WEZTERM_DIR ]; then
+        cp -r $WEZTERM_DIR "$WEZTERM_DIR.bak"
+        rm -r $WEZTERM_DIR
+    fi
+    echo "Took a backup of $WEZTERM_DIR"
+fi
+ln -f -s $SCRIPT_DIR/wezterm $WEZTERM_DIR
+
+# Handle .config/fish separately
+FISH_DIR="$HOME/.config/fish"
+if [ -e $FISH_DIR ]; then
+    if [ -d $FISH_DIR ]; then
+        cp -r $FISH_DIR "$FISH_DIR.bak"
+        rm -r $FISH_DIR
+    fi
+    echo "Took a backup of $FISH_DIR"
+fi
+ln -f -s $SCRIPT_DIR/fish $FISH_DIR
+
 # Handle starship.toml
 STARSHIP_CONFIG="$HOME/.config/starship.toml"
 if [ -e $STARSHIP_CONFIG ]; then
