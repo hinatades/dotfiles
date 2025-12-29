@@ -39,16 +39,14 @@ autoload -Uz compinit
 compinit
 source <(kubectl completion zsh)  # setup autocomplete in zsh into the current shell
 
-# Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
-export ZSH_THEME="simple"
+# Starship prompt
+eval "$(starship init zsh)"
 
-plugins=(
-    zsh-autosuggestions
-)
-
-source $ZSH/oh-my-zsh.sh
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
+# zsh-autosuggestions (Homebrew version)
+if [ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+  source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
+fi
 
 alias vim=nvim
 alias a="./a.out"
@@ -59,7 +57,7 @@ alias D="c++ D.cpp -std=c++17"
 alias E="c++ E.cpp -std=c++17"
 alias F="c++ F.cpp -std=c++17"
 alias k=kubectl
-complete -F __start_kubectl k
+compdef k=kubectl
 
 # fzf history
 function fzf-select-history() {
