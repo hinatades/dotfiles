@@ -7,6 +7,9 @@
 -- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
 
+-- Disable LazyVim's default spell check for markdown and text files
+vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
+
 -- Auto-reload files when they change externally
 vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
   group = vim.api.nvim_create_augroup("auto_reload_file", { clear = true }),
