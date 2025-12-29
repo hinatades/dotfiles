@@ -66,6 +66,11 @@ vim.api.nvim_create_user_command("Ag", function(opts)
   end
 end, { nargs = "?" })
 
+-- Alias: :AG (uppercase)
+vim.api.nvim_create_user_command("AG", function(opts)
+  vim.cmd("Ag " .. opts.args)
+end, { nargs = "?" })
+
 -- Fzf command for Telescope find_files
 -- Usage: :Fzf [search_term]
 -- If no argument, opens interactive file finder
@@ -83,4 +88,9 @@ vim.api.nvim_create_user_command("Fzf", function(opts)
   else
     builtin.find_files({ default_text = search_term })
   end
+end, { nargs = "?" })
+
+-- Alias: :FZF (uppercase)
+vim.api.nvim_create_user_command("FZF", function(opts)
+  vim.cmd("Fzf " .. opts.args)
 end, { nargs = "?" })
