@@ -1,46 +1,87 @@
 # dotfiles
 
-My OS X Dotfiles.
+My macOS Dotfiles.
+
+## Features
+
+- **Shell**: Zsh with [Starship](https://starship.rs/) prompt (oh-my-zsh simple theme replica)
+- **Terminal**: [WezTerm](https://wezfurlong.org/wezterm/) with tmux-style keybindings
+- **Editor**: [Neovim](https://neovim.io/) with [LazyVim](https://www.lazyvim.org/)
+- **Multiplexer**: tmux
+- **Fuzzy Finder**: fzf integration for history, repository navigation, and file search
+- **Window Manager**: [Hammerspoon](https://www.hammerspoon.org/) for window management
+
+## Configuration Files
+
+- `.zshrc` - Zsh configuration with custom functions and keybindings
+- `.tmux.conf` - tmux configuration
+- `nvim/` - Neovim/LazyVim configuration
+- `starship.toml` - Starship prompt configuration
+- `wezterm/` - WezTerm terminal configuration
+- `hammerspoon/` - Hammerspoon window management configuration
+- `set-symboliclink.sh` - Setup script for creating symbolic links
 
 ## Installation
 
-First of all, install the following with [Homebrew](https://brew.sh/).
+### 1. Install Required Tools
+
+Install the following with [Homebrew](https://brew.sh/):
 
 ```sh
-$ brew install zsh zsh-completion vim tmux reattach-to-user-namespace the_silver_searcher fzf ripgrep clang-format peco ghq gh
-$ brew install --cask hammerspoon
+brew install zsh zsh-autosuggestions neovim tmux reattach-to-user-namespace fzf ripgrep clang-format ghq gh kubectl starship
+brew install --cask wezterm hammerspoon
 ```
 
-Then clone the repogitory with [ghq](https://github.com/x-motemen/ghq)
+### 2. Install Version Managers
 
 ```sh
-$ ghq get https://github.com/hinatades/dotfiles.git
+brew install goenv pyenv nodebrew
 ```
 
-## Setup
+### 3. Clone Repository
+
+Clone the repository with [ghq](https://github.com/x-motemen/ghq):
 
 ```sh
-$ ./set-symboliclink.sh
+ghq get https://github.com/hinatades/dotfiles.git
+cd $(ghq root)/github.com/hinatades/dotfiles
 ```
 
-## Version managers
+### 4. Run Setup Script
 
-- Golang
-  - goenv
-- Python
-  - pyenv
-- Node.js
-  - nodebrew
-- Ruby
-  - rbenv
-- Terraform
-  - tfenv
-  
- ```
- $ brew install goenv pyenv nodebrew rbenv tfenv
- ```
+```sh
+./set-symboliclink.sh
+```
 
-## Hammerspoon
+This will create symbolic links for all configuration files.
+
+## Version Managers
+
+- **Golang**: goenv
+- **Python**: pyenv
+- **Node.js**: nodebrew
+
+## Key Features
+
+### Zsh Functions
+
+- `fzf-src` (Ctrl+Esc): Fuzzy find and navigate to repositories managed by ghq
+- `fzf-src-hub` (Ctrl+]): Fuzzy find and open repository in browser with gh
+- `fzf-select-history` (Ctrl+Space): Fuzzy search command history
+- `fvim`: Fuzzy find and open git-tracked files in Neovim
+- `ide`: Split tmux window into 3-pane layout
+
+### WezTerm Keybindings
+
+Leader key: `Ctrl+b` (tmux-style)
+
+- `Leader + |`: Split pane horizontally
+- `Leader + -`: Split pane vertically
+- `Leader + h/j/k/l`: Navigate panes
+- `Leader + H/J/K/L`: Resize panes
+- `Leader + 3`: Create 3-pane preset layout
+
+### Hammerspoon
 
 Window management with simple keybindings:
 
@@ -49,3 +90,7 @@ Window management with simple keybindings:
 - `Cmd+Shift+j`: Maximize window
 - `Cmd+Shift+k`: Center window (80% size)
 - `Ctrl+Return`: Toggle WezTerm visibility
+
+### Starship Prompt
+
+Configured to replicate the oh-my-zsh "simple" theme with a clean, minimalist look.
