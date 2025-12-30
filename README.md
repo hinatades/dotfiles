@@ -9,6 +9,7 @@ My macOS Dotfiles.
 - **Editor**: [Neovim](https://neovim.io/) with [LazyVim](https://www.lazyvim.org/)
 - **Multiplexer**: tmux
 - **Fuzzy Finder**: fzf integration for history, repository navigation, and file search
+- **Window Manager**: [Hammerspoon](https://www.hammerspoon.org/) for window management
 
 ## Configuration Files
 
@@ -17,6 +18,7 @@ My macOS Dotfiles.
 - `nvim/` - Neovim/LazyVim configuration
 - `starship.toml` - Starship prompt configuration
 - `wezterm/` - WezTerm terminal configuration
+- `hammerspoon/` - Hammerspoon window management configuration
 - `set-symboliclink.sh` - Setup script for creating symbolic links
 
 ## Installation
@@ -27,7 +29,7 @@ Install the following with [Homebrew](https://brew.sh/):
 
 ```sh
 brew install zsh zsh-autosuggestions neovim tmux reattach-to-user-namespace fzf ripgrep clang-format ghq gh kubectl starship
-brew install --cask wezterm
+brew install --cask wezterm hammerspoon
 ```
 
 ### 2. Install Version Managers
@@ -78,6 +80,16 @@ Leader key: `Ctrl+b` (tmux-style)
 - `Leader + h/j/k/l`: Navigate panes
 - `Leader + H/J/K/L`: Resize panes
 - `Leader + 3`: Create 3-pane preset layout
+
+### Hammerspoon
+
+Window management with simple keybindings:
+
+- `Cmd+Shift+h`: Move window to left half
+- `Cmd+Shift+l`: Move window to right half
+- `Cmd+Shift+j`: Maximize window
+- `Cmd+Shift+k`: Center window (80% size)
+- `Ctrl+Return`: Toggle WezTerm visibility
 
 ### Starship Prompt
 

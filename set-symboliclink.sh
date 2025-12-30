@@ -98,3 +98,14 @@ if [ -e $WEZTERM_DIR ]; then
     echo "Took a backup of $WEZTERM_DIR"
 fi
 ln -f -s $SCRIPT_DIR/wezterm $WEZTERM_DIR
+
+# Handle Hammerspoon configuration
+HAMMERSPOON_DIR="$HOME/.hammerspoon"
+if [ -e $HAMMERSPOON_DIR ]; then
+    if [ -d $HAMMERSPOON_DIR ]; then
+        cp -r $HAMMERSPOON_DIR "$HAMMERSPOON_DIR.bak"
+        rm -r $HAMMERSPOON_DIR
+    fi
+    echo "Took a backup of $HAMMERSPOON_DIR"
+fi
+ln -f -s $SCRIPT_DIR/hammerspoon $HAMMERSPOON_DIR
