@@ -8,3 +8,9 @@
 .ghq/*
 !.ghq/.gitkeep
 .aider*
+
+# Sensitive files
+.gitconfig
+.aws/
+.ssh/
+.zsh_history
