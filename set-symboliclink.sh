@@ -88,8 +88,24 @@ if [ -e $STARSHIP_CONFIG ]; then
 fi
 ln -f -s $SCRIPT_DIR/starship.toml $STARSHIP_CONFIG
 
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-# Set env vars
-source .zshrc
-# Install zsh autosuggestion with oh-my-zsh
-git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+# Handle WezTerm configuration
+WEZTERM_DIR="$HOME/.config/wezterm"
+if [ -e $WEZTERM_DIR ]; then
+    if [ -d $WEZTERM_DIR ]; then
+        cp -r $WEZTERM_DIR "$WEZTERM_DIR.bak"
+        rm -r $WEZTERM_DIR
+    fi
+    echo "Took a backup of $WEZTERM_DIR"
+fi
+ln -f -s $SCRIPT_DIR/wezterm $WEZTERM_DIR
+
+# Handle Hammerspoon configuration
+HAMMERSPOON_DIR="$HOME/.hammerspoon"
+if [ -e $HAMMERSPOON_DIR ]; then
+    if [ -d $HAMMERSPOON_DIR ]; then
+        cp -r $HAMMERSPOON_DIR "$HAMMERSPOON_DIR.bak"
+        rm -r $HAMMERSPOON_DIR
+    fi
+    echo "Took a backup of $HAMMERSPOON_DIR"
+fi
+ln -f -s $SCRIPT_DIR/hammerspoon $HAMMERSPOON_DIR
