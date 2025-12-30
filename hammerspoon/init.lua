@@ -63,9 +63,10 @@ hs.hotkey.bind({ "ctrl" }, "return", function()
   end)
 end)
 
--- Window Management
--- ウィンドウを左半分に配置
-hs.hotkey.bind({"cmd", "alt"}, "Left", function()
+-- Window Management (Cmd+Shift+h/j/k/l)
+
+-- h: 横幅を1/2して左に配置
+hs.hotkey.bind({"cmd", "shift"}, "h", function()
   local win = hs.window.focusedWindow()
   if not win then return end
   local f = win:frame()
@@ -79,8 +80,8 @@ hs.hotkey.bind({"cmd", "alt"}, "Left", function()
   win:setFrame(f)
 end)
 
--- ウィンドウを右半分に配置
-hs.hotkey.bind({"cmd", "alt"}, "Right", function()
+-- l: 横幅を1/2して右に配置
+hs.hotkey.bind({"cmd", "shift"}, "l", function()
   local win = hs.window.focusedWindow()
   if not win then return end
   local f = win:frame()
@@ -94,41 +95,26 @@ hs.hotkey.bind({"cmd", "alt"}, "Right", function()
   win:setFrame(f)
 end)
 
--- ウィンドウを上半分に配置
-hs.hotkey.bind({"cmd", "alt"}, "Up", function()
-  local win = hs.window.focusedWindow()
-  if not win then return end
-  local f = win:frame()
-  local screen = win:screen()
-  local max = screen:frame()
-
-  f.x = max.x
-  f.y = max.y
-  f.w = max.w
-  f.h = max.h / 2
-  win:setFrame(f)
-end)
-
--- ウィンドウを下半分に配置
-hs.hotkey.bind({"cmd", "alt"}, "Down", function()
-  local win = hs.window.focusedWindow()
-  if not win then return end
-  local f = win:frame()
-  local screen = win:screen()
-  local max = screen:frame()
-
-  f.x = max.x
-  f.y = max.y + (max.h / 2)
-  f.w = max.w
-  f.h = max.h / 2
-  win:setFrame(f)
-end)
-
--- ウィンドウを最大化
-hs.hotkey.bind({"cmd", "alt"}, "F", function()
+-- j: 最大化
+hs.hotkey.bind({"cmd", "shift"}, "j", function()
   local win = hs.window.focusedWindow()
   if not win then return end
   win:maximize()
+end)
+
+-- k: 中央に配置
+hs.hotkey.bind({"cmd", "shift"}, "k", function()
+  local win = hs.window.focusedWindow()
+  if not win then return end
+  local f = win:frame()
+  local screen = win:screen()
+  local max = screen:frame()
+
+  f.w = max.w * 0.8
+  f.h = max.h * 0.8
+  f.x = max.x + (max.w - f.w) / 2
+  f.y = max.y + (max.h - f.h) / 2
+  win:setFrame(f)
 end)
 
 -- 設定の再読み込み
