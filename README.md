@@ -8,6 +8,7 @@ First of all, install the following with [Homebrew](https://brew.sh/).
 
 ```sh
 $ brew install zsh zsh-completion vim tmux reattach-to-user-namespace the_silver_searcher fzf ripgrep clang-format peco ghq gh
+$ brew install --cask hammerspoon
 ```
 
 Then clone the repogitory with [ghq](https://github.com/x-motemen/ghq)
@@ -38,3 +39,13 @@ $ ./set-symboliclink.sh
  ```
  $ brew install goenv pyenv nodebrew rbenv tfenv
  ```
+
+## Hammerspoon
+
+Window management with simple keybindings:
+
+- `Cmd+Shift+h`: Move window to left half
+- `Cmd+Shift+l`: Move window to right half
+- `Cmd+Shift+j`: Maximize window
+- `Cmd+Shift+k`: Center window (80% size)
+- `Ctrl+Return`: Toggle WezTerm visibility
