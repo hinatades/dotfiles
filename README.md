@@ -1,4 +1,5 @@
-```
+<div align="center">
+<pre>
                  888          888     .d888 d8b 888
                  888          888    d88P"  Y8P 888
                  888          888    888        888
@@ -9,7 +10,8 @@
              "Y88888  "Y88P"   "Y888 888    888 888  "Y8888   88888P"
 
                          github.com/hinatades/dotfiles
-```
+</pre>
+</div>
 
 My macOS Dotfiles.
 
