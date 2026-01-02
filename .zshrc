@@ -1,5 +1,25 @@
 export PATH=/usr/local/bin:$PATH
 
+# Zsh History Configuration
+# History file location (synced via Dropbox)
+HISTFILE=$HOME/.zsh_history
+# Number of commands to keep in memory
+HISTSIZE=10000
+# Number of commands to save to file
+SAVEHIST=10000
+# Share history across all sessions
+setopt share_history
+# Append to history file incrementally
+setopt inc_append_history
+# Remove older duplicates first when trimming history
+setopt hist_expire_dups_first
+# Don't save duplicate commands
+setopt hist_ignore_dups
+# Don't save commands that start with a space
+setopt hist_ignore_space
+# Remove extra whitespace from commands before saving
+setopt hist_reduce_blanks
+
 # Starship prompt (oh-my-zsh simple theme replica)
 eval "$(starship init zsh)"
 
