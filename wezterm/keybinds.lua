@@ -13,6 +13,19 @@ wezterm.on("update-right-status", function(window, pane)
 end)
 
 return {
+	mouse_bindings = {
+		-- マウスホイールでスクロール
+		{
+			event = { Down = { streak = 1, button = { WheelUp = 1 } } },
+			mods = "NONE",
+			action = act.ScrollByCurrentEventWheelDelta,
+		},
+		{
+			event = { Down = { streak = 1, button = { WheelDown = 1 } } },
+			mods = "NONE",
+			action = act.ScrollByCurrentEventWheelDelta,
+		},
+	},
 	keys = {
 		{
 			-- workspaceの切り替え

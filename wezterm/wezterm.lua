@@ -22,6 +22,9 @@ config.native_macos_fullscreen_mode = false
 config.skip_close_confirmation_for_processes_named = {}
 config.window_close_confirmation = "NeverPrompt"
 
+-- スクロールバック履歴の行数
+config.scrollback_lines = 2000
+
 ----------------------------------------------------
 -- Tab
 ----------------------------------------------------
@@ -88,8 +91,10 @@ end)
 -- keybinds
 ----------------------------------------------------
 config.disable_default_key_bindings = true
-config.keys = require("keybinds").keys
-config.key_tables = require("keybinds").key_tables
+local keybinds = require("keybinds")
+config.keys = keybinds.keys
+config.key_tables = keybinds.key_tables
+config.mouse_bindings = keybinds.mouse_bindings
 config.leader = { key = "b", mods = "CTRL", timeout_milliseconds = 2000 }
 
 return config
