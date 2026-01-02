@@ -46,8 +46,6 @@ done
 
 SECRET_DOT_FILES=(
     .gitconfig
-    .aws
-    .ssh
     .zsh_history
 )
 

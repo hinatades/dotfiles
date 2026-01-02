@@ -21,6 +21,15 @@ My macOS Dotfiles.
 - `hammerspoon/` - Hammerspoon window management configuration
 - `set-symboliclink.sh` - Setup script for creating symbolic links
 
+## Dropbox Sync
+
+This dotfiles setup syncs critical files across machines via Dropbox:
+
+- `.zsh_history` - Command history sync
+- `.gitconfig` - Git configuration
+
+**Setup:** Place these files in `~/Dropbox/` before running the setup script. The script creates symlinks automatically.
+
 ## Installation
 
 ### 1. Install Required Tools
