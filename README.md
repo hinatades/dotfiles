@@ -41,10 +41,11 @@ brew install zsh zsh-autosuggestions neovim fzf ripgrep clang-format ghq gh kube
 brew install --cask wezterm hammerspoon
 ```
 
-**Note:** `tmux` and `reattach-to-user-namespace` are optional. Install them only if you prefer tmux over WezTerm's built-in pane management:
-```sh
-brew install tmux reattach-to-user-namespace
-```
+> [!NOTE]
+> `tmux` and `reattach-to-user-namespace` are optional. Install them only if you prefer tmux over WezTerm's built-in pane management:
+> ```sh
+> brew install tmux reattach-to-user-namespace
+> ```
 
 ### 2. Install Version Managers
 
@@ -96,7 +97,8 @@ Leader key: `Ctrl+b` (tmux-style)
 - `Leader + [`: Enter copy mode (for scrolling with `Ctrl+f/b/d/u`, exit with `q`)
 - `Leader + 3`: Create 3-pane preset layout
 
-**Note:** The included `.tmux.conf` uses the same `Ctrl+b` leader key and similar keybindings, so you can switch between WezTerm and tmux with minimal adjustment.
+> [!NOTE]
+> The included `.tmux.conf` uses the same `Ctrl+b` leader key and similar keybindings, so you can switch between WezTerm and tmux with minimal adjustment.
 
 ### Hammerspoon
 
