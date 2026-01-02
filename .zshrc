@@ -70,6 +70,9 @@ fi
 
 alias vim=nvim
 alias ls='ls -G'
+alias grep='grep --color=auto'
+alias diff='diff --color=auto'
+alias tree='tree -C'
 alias a="./a.out"
 alias A="c++ A.cpp -std=c++17"
 alias B="c++ B.cpp -std=c++17"
