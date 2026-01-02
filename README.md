@@ -78,7 +78,8 @@ Leader key: `Ctrl+b` (tmux-style)
 - `Leader + |`: Split pane horizontally
 - `Leader + -`: Split pane vertically
 - `Leader + h/j/k/l`: Navigate panes
-- `Leader + H/J/K/L`: Resize panes
+- `Leader + H/J/K/L`: Resize panes (expand current pane in direction)
+- `Leader + [`: Enter copy mode (for scrolling with `Ctrl+f/b/d/u`, exit with `q`)
 - `Leader + 3`: Create 3-pane preset layout
 
 ### Hammerspoon

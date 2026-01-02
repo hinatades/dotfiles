@@ -84,6 +84,11 @@ return {
 		{ key = "l", mods = "LEADER", action = act.ActivatePaneDirection("Right") },
 		{ key = "k", mods = "LEADER", action = act.ActivatePaneDirection("Up") },
 		{ key = "j", mods = "LEADER", action = act.ActivatePaneDirection("Down") },
+		-- Paneリサイズ Leader + H/J/K/L
+		{ key = "H", mods = "LEADER|SHIFT", action = act.AdjustPaneSize({ "Left", 5 }) },
+		{ key = "J", mods = "LEADER|SHIFT", action = act.AdjustPaneSize({ "Down", 5 }) },
+		{ key = "K", mods = "LEADER|SHIFT", action = act.AdjustPaneSize({ "Up", 5 }) },
+		{ key = "L", mods = "LEADER|SHIFT", action = act.AdjustPaneSize({ "Right", 5 }) },
 		-- Pane選択
 		{ key = "[", mods = "CTRL|SHIFT", action = act.PaneSelect },
 		-- 選択中のPaneのみ表示
