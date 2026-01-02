@@ -69,6 +69,7 @@ if [ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
 fi
 
 alias vim=nvim
+alias ls='ls -G'
 alias a="./a.out"
 alias A="c++ A.cpp -std=c++17"
 alias B="c++ B.cpp -std=c++17"
