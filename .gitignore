@@ -14,3 +14,17 @@
 .aws/
 .ssh/
 .zsh_history
+
+# Environment variables
+.env
+.env.*
+
+# Certificates and keys
+*.key
+*.pem
+*.p12
+*.crt
+
+# Credentials
+*credentials*
+*secret*
