@@ -47,28 +47,39 @@ vim.api.nvim_create_autocmd("QuickFixCmdPost", {
   command = "cwindow",
 })
 
--- Ag command for Telescope live_grep (like vim-ag)
--- Usage: :Ag [search_term]
+-- Rg command for Telescope live_grep using ripgrep with fzf scoring
+-- Usage: :Rg [search_term]
 -- If no argument, opens interactive live grep
--- If argument provided, searches for that term
-vim.api.nvim_create_user_command("Ag", function(opts)
+-- If argument provided, pre-fills the search with fuzzy matching
+vim.api.nvim_create_user_command("Rg", function(opts)
   local ok, builtin = pcall(require, "telescope.builtin")
   if not ok then
     vim.notify("Telescope is not installed", vim.log.levels.ERROR)
     return
   end
 
+  -- Get fzf-native sorter for better scoring
+  local telescope = require("telescope")
+  local fzf_ok, fzf_sorter = pcall(function()
+    return telescope.extensions.fzf.native_fzf_sorter()
+  end)
+
   local search_term = opts.args
-  if search_term == "" then
-    builtin.live_grep()
-  else
-    builtin.grep_string({ search = search_term })
+  local live_grep_opts = {
+    default_text = search_term ~= "" and search_term or nil,
+  }
+
+  -- Apply fzf-native sorter if available
+  if fzf_ok and fzf_sorter then
+    live_grep_opts.sorter = fzf_sorter
   end
+
+  builtin.live_grep(live_grep_opts)
 end, { nargs = "?" })
 
--- Alias: :AG (uppercase)
-vim.api.nvim_create_user_command("AG", function(opts)
-  vim.cmd("Ag " .. opts.args)
+-- Alias: :RG (uppercase)
+vim.api.nvim_create_user_command("RG", function(opts)
+  vim.cmd("Rg " .. opts.args)
 end, { nargs = "?" })
 
 -- Fzf command for Telescope find_files
