@@ -73,7 +73,21 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 		foreground = "#FFFFFF"
 	end
 	local edge_foreground = background
-	local title = "   " .. wezterm.truncate_right(tab.active_pane.title, max_width - 1) .. "   "
+
+	-- Get current working directory basename
+	local cwd = tab.active_pane.current_working_dir
+	local title = tab.active_pane.title
+	if cwd then
+		local cwd_uri = cwd
+		-- Extract path from file:// URI
+		local path = cwd_uri.file_path or cwd_uri.path or cwd_uri
+		if path then
+			-- Get basename of the path
+			title = path:match("([^/]+)/?$") or path
+		end
+	end
+
+	title = "   " .. wezterm.truncate_right(title, max_width - 1) .. "   "
 	return {
 		{ Background = { Color = edge_background } },
 		{ Foreground = { Color = edge_foreground } },
