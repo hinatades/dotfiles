@@ -6,6 +6,12 @@ return {
     config = function()
       -- Enable copilot on startup (migrated from .vimrc)
       vim.g.copilot_enabled = true
+
+      -- Disable copilot for specific filetypes
+      vim.g.copilot_filetypes = {
+        ["oil"] = false,
+        ["TelescopePrompt"] = false,
+      }
     end,
   },
   -- Copilot Chat
