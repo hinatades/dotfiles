@@ -26,11 +26,14 @@ vim.api.nvim_create_user_command("Atcoder", function()
   vim.api.nvim_buf_set_lines(0, 0, -1, false, lines)
 end, {})
 
--- Black Python formatter
-vim.api.nvim_create_user_command("Black", function()
-  local current_view = vim.fn.winsaveview()
-  vim.cmd("%!black -q -")
-  vim.fn.winrestview(current_view)
+-- Ruff Python formatter
+vim.api.nvim_create_user_command("Ruff", function()
+  local ok, conform = pcall(require, "conform")
+  if not ok then
+    vim.notify("conform.nvim is not installed", vim.log.levels.ERROR)
+    return
+  end
+  conform.format({ bufnr = vim.api.nvim_get_current_buf() })
 end, {})
 
 -- TSX filetype detection (migrated from .vimrc autocmd)
