@@ -86,6 +86,12 @@ This will create symbolic links for all configuration files.
 - `fvim`: Fuzzy find and open git-tracked files in Neovim
 - `ide`: Split tmux window into 3-pane layout (requires tmux)
 
+### Neovim
+
+- `-`: Open oil.nvim file explorer (edit like a buffer: `o` to add file, `:w` to save)
+- `:Fzf`: Fuzzy file finder (Telescope)
+- `:Rg`: Ripgrep search in files (Telescope)
+
 ### WezTerm Keybindings
 
 Leader key: `Ctrl+b` (tmux-style)
