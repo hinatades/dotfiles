@@ -37,5 +37,8 @@ vim.opt.autoread = true  -- ファイルが外部で変更されたら自動的�
 vim.opt.foldenable = false
 vim.opt.whichwrap = "b,s,h,l,<,>,[,],~"
 
+-- Horizontal scrolling
+vim.opt.sidescrolloff = 0  -- カーソル移動時の横スクロール追随を無効化
+
 -- Disable conceal for Markdown (show raw syntax)
 vim.opt.conceallevel = 0  -- Markdownのconceal機能を無効化（構文を常に表示）
