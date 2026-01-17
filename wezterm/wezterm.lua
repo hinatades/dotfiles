@@ -28,8 +28,8 @@ config.scrollback_lines = 2000
 ----------------------------------------------------
 -- Tab
 ----------------------------------------------------
--- タイトルバーを非表示
-config.window_decorations = "RESIZE"
+-- タイトルバーを非表示（メニューバー領域も覆う）
+config.window_decorations = "NONE"
 -- タブバーの表示
 config.show_tabs_in_tab_bar = true
 -- タブが一つの時は非表示
