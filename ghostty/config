@@ -11,7 +11,7 @@ font-size = 18
 # Window
 # =============================================================================
 background-opacity = 0.85
-window-decoration = false
+window-decoration = none
 macos-titlebar-style = hidden
 
 # =============================================================================
@@ -19,11 +19,6 @@ macos-titlebar-style = hidden
 # =============================================================================
 cursor-style = underline
 cursor-style-blink = true
-
-# =============================================================================
-# Scrollback
-# =============================================================================
-scrollback-limit = 2000
 
 # =============================================================================
 # macOS specific
@@ -58,7 +53,7 @@ keybind = ctrl+b>x=close_surface
 keybind = ctrl+b>z=toggle_split_zoom
 
 # =============================================================================
-# Tab management (if needed)
+# Tab management
 # =============================================================================
 keybind = ctrl+b>c=new_tab
 keybind = ctrl+b>n=next_tab
@@ -86,7 +81,6 @@ keybind = super+minus=decrease_font_size:1
 keybind = super+zero=reset_font_size
 keybind = super+q=quit
 keybind = super+w=close_surface
-keybind = super+h=toggle_visibility
 
 # Reload config
 keybind = ctrl+shift+r=reload_config
