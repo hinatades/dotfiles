@@ -1,12 +1,15 @@
-local APP_NAME = "WezTerm"
+-- Terminal app to toggle with Ctrl+Return
+-- Uncomment the one you want to use:
+-- local APP_NAME = "WezTerm"
+local APP_NAME = "Ghostty"
 
 -- 今いる画面（マウス基準）
 local function currentScreen()
   return hs.mouse.getCurrentScreen() or hs.screen.mainScreen()
 end
 
--- WezTerm のウィンドウを確実に取得
-local function getWezTermWindow(app)
+-- ターミナルのウィンドウを確実に取得
+local function getTerminalWindow(app)
   if not app then return nil end
   local wins = app:allWindows()
   if wins and #wins > 0 then
@@ -27,7 +30,7 @@ end
 -- 起動直後対策（ウィンドウが出るまで待つ）
 local function ensureMaximized(app, tries)
   tries = tries or 15
-  local win = getWezTermWindow(app)
+  local win = getTerminalWindow(app)
   if win then
     maximize(win)
     return
@@ -38,7 +41,7 @@ local function ensureMaximized(app, tries)
   end)
 end
 
--- WezTerm toggle
+-- Terminal toggle (Ctrl+Return)
 hs.hotkey.bind({ "ctrl" }, "return", function()
   local app = hs.application.find(APP_NAME)
 
