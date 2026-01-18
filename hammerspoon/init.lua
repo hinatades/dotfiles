@@ -1,7 +1,7 @@
 -- Terminal app to toggle with Ctrl+Return
 -- Uncomment the one you want to use:
--- local APP_NAME = "WezTerm"
-local APP_NAME = "Ghostty"
+local APP_NAME = "WezTerm"
+-- local APP_NAME = "Ghostty"
 
 -- 今いる画面（マウス基準）
 local function currentScreen()
