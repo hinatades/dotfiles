@@ -88,7 +88,7 @@ function fzf-select-history() {
   selected=$(print -r -- "$history" | fzf --query "$LBUFFER") || return 0
   BUFFER="${selected//\\n/$'\n'}"
   CURSOR=$#BUFFER
-  zle -R -c
+  zle reset-prompt
 }
 zle -N fzf-select-history
 bindkey '^@' fzf-select-history
