@@ -118,3 +118,13 @@ if [ -e $GHOSTTY_DIR ]; then
     echo "Took a backup of $GHOSTTY_DIR"
 fi
 ln -f -s $SCRIPT_DIR/ghostty $GHOSTTY_DIR
+
+# Install gwq (Git Worktree Manager)
+if command -v brew &> /dev/null; then
+    if ! command -v gwq &> /dev/null; then
+        echo "Installing gwq..."
+        brew install d-kuro/tap/gwq
+    else
+        echo "gwq is already installed"
+    fi
+fi

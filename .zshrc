@@ -57,6 +57,11 @@ autoload -Uz compinit
 compinit
 source <(kubectl completion zsh)  # setup autocomplete in zsh into the current shell
 
+# gwq (Git Worktree Manager)
+if command -v gwq &> /dev/null; then
+    source <(gwq completion zsh)
+fi
+
 # zsh-autosuggestions (Homebrew version)
 if [ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
   source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -128,6 +133,26 @@ function fzf-src-hub() {
 }
 zle -N fzf-src-hub
 bindkey '^]' fzf-src-hub
+
+
+# fzf + gwq (worktree選択してcd)
+function fzf-gwq() {
+  local list selected
+
+  # パスに/worktrees/が含まれないものがghqで管理している元リポジトリ
+  list=$(gwq list --json | jq -r '.[] | (if (.path | contains("/worktrees/")) then "  " else "● " end) + .branch + "\t" + .path')
+  [[ -z "$list" ]] && return 0
+
+  selected=$(print -r -- "$list" | fzf --query "$LBUFFER" --with-nth=1 --delimiter='\t') || return 0
+  [[ -n "$selected" ]] && {
+    local selected_dir=$(echo "$selected" | cut -f2)
+    BUFFER="cd ${selected_dir}"
+    zle accept-line
+  }
+  zle clear-screen
+}
+zle -N fzf-gwq
+bindkey '^\' fzf-gwq
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

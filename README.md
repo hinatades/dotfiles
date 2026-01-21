@@ -37,7 +37,7 @@ This dotfiles setup syncs critical files across machines via Dropbox:
 Install the following with [Homebrew](https://brew.sh/):
 
 ```sh
-brew install zsh zsh-autosuggestions neovim fzf ripgrep clang-format ghq gh kubectl starship
+brew install zsh zsh-autosuggestions neovim fzf ripgrep clang-format ghq gh kubectl starship d-kuro/tap/gwq
 brew install --cask wezterm hammerspoon
 ```
 
@@ -83,6 +83,7 @@ This will create symbolic links for all configuration files.
 - `fzf-src` (Ctrl+Esc): Fuzzy find and navigate to repositories managed by ghq
 - `fzf-src-hub` (Ctrl+]): Fuzzy find and open repository in browser with gh
 - `fzf-select-history` (Ctrl+Space): Fuzzy search command history
+- `fzf-gwq` (Ctrl+\): Fuzzy find and navigate to git worktrees managed by gwq
 - `fvim`: Fuzzy find and open git-tracked files in Neovim
 - `ide`: Split tmux window into 3-pane layout (requires tmux)
 
