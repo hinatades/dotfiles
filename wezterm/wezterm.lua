@@ -11,15 +11,16 @@ config.macos_window_background_blur = 0
 -- カーソル設定
 config.default_cursor_style = "BlinkingUnderline"
 
--- ウィンドウサイズを画面いっぱいに最大化（ワークスペースは切り替えない）
-config.initial_rows = 999
-config.initial_cols = 999
-
--- macOSネイティブフルスクリーンを無効化（現在のワークスペースで最大化）
+-- macOS非ネイティブフルスクリーン（現在のワークスペースでメニューバーも隠す）
 config.native_macos_fullscreen_mode = false
 
--- グローバルショートカットでの表示切替を有効化
-config.skip_close_confirmation_for_processes_named = {}
+-- 起動時に自動でフルスクリーンにする
+wezterm.on("gui-startup", function(cmd)
+	local tab, pane, window = wezterm.mcp.spawn_window(cmd or {})
+	window:gui_window():toggle_fullscreen()
+end)
+
+-- 閉じる確認ダイアログを無効化
 config.window_close_confirmation = "NeverPrompt"
 
 -- スクロールバック履歴の行数
@@ -28,8 +29,8 @@ config.scrollback_lines = 2000
 ----------------------------------------------------
 -- Tab
 ----------------------------------------------------
--- タイトルバーを非表示（メニューバー領域も覆う）
-config.window_decorations = "NONE"
+-- タイトルバーを非表示
+config.window_decorations = "RESIZE"
 -- タブバーの表示
 config.show_tabs_in_tab_bar = true
 -- タブが一つの時は非表示

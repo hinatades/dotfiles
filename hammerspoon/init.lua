@@ -1,14 +1,8 @@
 -- Terminal app to toggle with Ctrl+Return
--- Uncomment the one you want to use:
 local APP_NAME = "WezTerm"
 -- local APP_NAME = "Ghostty"
 
--- 今いる画面（マウス基準）
-local function currentScreen()
-  return hs.mouse.getCurrentScreen() or hs.screen.mainScreen()
-end
-
--- ターミナルのウィンドウを確実に取得
+-- ターミナルのウィンドウを取得
 local function getTerminalWindow(app)
   if not app then return nil end
   local wins = app:allWindows()
@@ -18,26 +12,37 @@ local function getTerminalWindow(app)
   return nil
 end
 
--- 同一 Space のまま最大化（メニューバー領域も含む）
-local function maximize(win)
-  if not win then return end
-  local screen = currentScreen()
-  win:moveToScreen(screen)
-  -- fullFrame() を使うとメニューバー領域も含めた画面全体を使用
-  win:setFrame(screen:fullFrame(), 0)
+-- ウィンドウがフルスクリーン相当かチェック（非ネイティブフルスクリーン対応）
+local function isFullscreenSize(win)
+  if not win then return false end
+  local winFrame = win:frame()
+  local screenFrame = win:screen():fullFrame()
+  -- ウィンドウが画面全体を覆っているかチェック（数ピクセルの誤差を許容）
+  return math.abs(winFrame.x - screenFrame.x) < 5
+    and math.abs(winFrame.y - screenFrame.y) < 5
+    and math.abs(winFrame.w - screenFrame.w) < 5
+    and math.abs(winFrame.h - screenFrame.h) < 5
 end
 
--- 起動直後対策（ウィンドウが出るまで待つ）
-local function ensureMaximized(app, tries)
+-- WezTermにCmd+Enterを送信してフルスクリーンにする
+local function sendFullscreenKey(app)
+  if not app then return end
+  hs.eventtap.keyStroke({"cmd"}, "return", 0, app)
+end
+
+-- フルスクリーンでなければフルスクリーンにする
+local function ensureFullscreen(app, tries)
   tries = tries or 15
   local win = getTerminalWindow(app)
   if win then
-    maximize(win)
+    if not isFullscreenSize(win) then
+      sendFullscreenKey(app)
+    end
     return
   end
   if tries <= 0 then return end
   hs.timer.doAfter(0.05, function()
-    ensureMaximized(app, tries - 1)
+    ensureFullscreen(app, tries - 1)
   end)
 end
 
@@ -45,8 +50,10 @@ end
 hs.hotkey.bind({ "ctrl" }, "return", function()
   local app = hs.application.find(APP_NAME)
 
-  -- アプリが起動していない場合は何もしない
+  -- アプリが起動していない場合は起動
   if not app then
+    hs.application.launchOrFocus(APP_NAME)
+    -- WezTermのgui-startupでフルスクリーンになるので追加処理は不要
     return
   end
 
@@ -59,10 +66,10 @@ hs.hotkey.bind({ "ctrl" }, "return", function()
   -- 起動しているが非表示 → 表示
   app:activate()
 
-  -- 表示後に必ず最大化
-  hs.timer.doAfter(0.05, function()
+  -- 表示後にフルスクリーンでなければフルスクリーンにする
+  hs.timer.doAfter(0.1, function()
     local a = hs.application.find(APP_NAME)
-    if a then ensureMaximized(a) end
+    if a then ensureFullscreen(a) end
   end)
 end)
 
