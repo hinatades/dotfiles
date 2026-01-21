@@ -135,6 +135,42 @@ zle -N fzf-src-hub
 bindkey '^]' fzf-src-hub
 
 
+# fzf + git branch (ブランチ選択してcheckout)
+function fzf-git-branch() {
+  local branches selected
+
+  branches=$(git branch --format='%(refname:short)' 2>/dev/null)
+  [[ -z "$branches" ]] && return 0
+
+  selected=$(print -r -- "$branches" | fzf --query "$LBUFFER") || return 0
+  [[ -n "$selected" ]] && {
+    BUFFER="git checkout ${selected}"
+    zle accept-line
+  }
+  zle clear-screen
+}
+zle -N fzf-git-branch
+bindkey '^g' fzf-git-branch
+
+
+# fzf + git branch delete (ブランチ選択して削除、Tab複数選択可)
+function fzf-git-branch-delete() {
+  local branches selected
+
+  branches=$(git branch --format='%(refname:short)' 2>/dev/null)
+  [[ -z "$branches" ]] && return 0
+
+  selected=$(print -r -- "$branches" | fzf -m --query "$LBUFFER" | tr '\n' ' ') || return 0
+  [[ -n "$selected" ]] && {
+    BUFFER="git branch -d ${selected}"
+    zle accept-line
+  }
+  zle clear-screen
+}
+zle -N fzf-git-branch-delete
+bindkey '^x' fzf-git-branch-delete
+
+
 # fzf + gwq (worktree選択してcd)
 function fzf-gwq() {
   local list selected
