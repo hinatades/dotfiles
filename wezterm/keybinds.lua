@@ -78,6 +78,8 @@ return {
 
 		-- ウィンドウを非表示 (Cmd+H)
 		{ key = "h", mods = "SUPER", action = act.HideApplication },
+		-- フルスクリーン切り替え (Cmd+Enter) - native_macos_fullscreen_mode=falseでWorkspace切り替えなし
+		{ key = "Enter", mods = "SUPER", action = act.ToggleFullScreen },
 
 		-- コピーモード
 		-- { key = 'X', mods = 'LEADER', action = act.ActivateKeyTable{ name = 'copy_mode', one_shot =false }, },
