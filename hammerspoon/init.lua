@@ -1,6 +1,5 @@
 -- Terminal app to toggle with Ctrl+Return
 local APP_NAME = "WezTerm"
--- local APP_NAME = "Ghostty"
 
 -- ターミナルのウィンドウを取得
 local function getTerminalWindow(app)

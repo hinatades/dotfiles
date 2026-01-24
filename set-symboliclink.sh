@@ -108,17 +108,6 @@ if [ -e $HAMMERSPOON_DIR ]; then
 fi
 ln -f -s $SCRIPT_DIR/hammerspoon $HAMMERSPOON_DIR
 
-# Handle Ghostty configuration
-GHOSTTY_DIR="$HOME/.config/ghostty"
-if [ -e $GHOSTTY_DIR ]; then
-    if [ -d $GHOSTTY_DIR ]; then
-        cp -r $GHOSTTY_DIR "$GHOSTTY_DIR.bak"
-        rm -r $GHOSTTY_DIR
-    fi
-    echo "Took a backup of $GHOSTTY_DIR"
-fi
-ln -f -s $SCRIPT_DIR/ghostty $GHOSTTY_DIR
-
 # Install gwq (Git Worktree Manager)
 if command -v brew &> /dev/null; then
     if ! command -v gwq &> /dev/null; then
