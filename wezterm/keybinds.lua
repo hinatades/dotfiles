@@ -1,15 +1,26 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
 
--- Show which key table is active and clock in the status area
+-- Show status: leader key, key table, and clock with icons
 wezterm.on("update-right-status", function(window, pane)
-	local time = wezterm.strftime("%Y-%m-%d %H:%M:%S")
-	local name = window:active_key_table()
-	local status = time
-	if name then
-		status = "TABLE: " .. name .. " | " .. time
+	local cells = {}
+
+	-- Leader key indicator
+	if window:leader_is_active() then
+		table.insert(cells, wezterm.nerdfonts.md_keyboard .. " LEADER")
 	end
-	window:set_right_status(status)
+
+	-- Active key table
+	local key_table = window:active_key_table()
+	if key_table then
+		table.insert(cells, wezterm.nerdfonts.md_table .. " " .. key_table)
+	end
+
+	-- Date and time with icon
+	local time = wezterm.strftime("%Y-%m-%d %H:%M:%S")
+	table.insert(cells, wezterm.nerdfonts.md_clock .. " " .. time)
+
+	window:set_right_status(table.concat(cells, "  │  ") .. "   ")
 end)
 
 return {
