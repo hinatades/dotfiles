@@ -2,7 +2,6 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
 config.automatically_reload_config = true
-config.default_cwd = wezterm.home_dir
 config.font = wezterm.font("HackGen35 Console NF")
 config.font_size = 18.0
 config.use_ime = true

@@ -82,7 +82,7 @@ return {
 		-- Tab入れ替え
 		{ key = "{", mods = "LEADER", action = act({ MoveTabRelative = -1 }) },
 		-- Tab新規作成 tmux風
-		{ key = "c", mods = "LEADER", action = act({ SpawnTab = "CurrentPaneDomain" }) },
+		{ key = "c", mods = "LEADER", action = act.SpawnCommandInNewTab({ cwd = wezterm.home_dir }) },
 		-- Tabを閉じる
 		{ key = "w", mods = "SUPER", action = act({ CloseCurrentTab = { confirm = true } }) },
 		{ key = "}", mods = "LEADER", action = act({ MoveTabRelative = 1 }) },
