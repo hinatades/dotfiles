@@ -45,6 +45,11 @@ export PATH="$HOME/.local/bin:$PATH"
 # mysql
 export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 
+# Claude
+# export AWS_REGION=ap-northeast-1
+# export CLAUDE_CODE_USE_BEDROCK=1
+# export ANTHROPIC_MODEL='global.anthropic.claude-sonnet-4-5-20250929-v1:0'
+
 # Editor
 export EDITOR="nvim"
 export VISUAL="nvim"
