@@ -46,9 +46,9 @@ export PATH="$HOME/.local/bin:$PATH"
 export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 
 # Claude
-# export AWS_REGION=ap-northeast-1
-# export CLAUDE_CODE_USE_BEDROCK=1
-# export ANTHROPIC_MODEL='global.anthropic.claude-sonnet-4-5-20250929-v1:0'
+export AWS_REGION=ap-northeast-1
+export CLAUDE_CODE_USE_BEDROCK=1
+export ANTHROPIC_MODEL='global.anthropic.claude-sonnet-4-5-20250929-v1:0'
 
 # Editor
 export EDITOR="nvim"
@@ -95,9 +95,11 @@ function fzf-select-history() {
   history=$(history -nr 1 | awk '!a[$0]++')
   [[ -z "$history" ]] && return 0
 
-  selected=$(print -r -- "$history" | fzf --query "$LBUFFER") || return 0
-  BUFFER="${selected//\\n/$'\n'}"
-  CURSOR=$#BUFFER
+  selected=$(print -r -- "$history" | fzf --query "$LBUFFER")
+  if [[ -n "$selected" ]]; then
+    BUFFER="${selected//\\n/$'\n'}"
+    CURSOR=$#BUFFER
+  fi
   zle reset-prompt
 }
 zle -N fzf-select-history
@@ -111,7 +113,7 @@ function fzf-src() {
   list=$(ghq list -p)
   [[ -z "$list" ]] && return 0
 
-  selected_dir=$(print -r -- "$list" | fzf --query "$LBUFFER") || return 0
+  selected_dir=$(print -r -- "$list" | fzf --query "$LBUFFER")
   [[ -n "$selected_dir" ]] && {
     BUFFER="cd ${selected_dir}"
     zle accept-line
@@ -129,7 +131,7 @@ function fzf-src-hub() {
   list=$(ghq list)
   [[ -z "$list" ]] && return 0
 
-  selected_dir=$(print -r -- "$list" | fzf --query "$LBUFFER" | cut -d "/" -f 2,3) || return 0
+  selected_dir=$(print -r -- "$list" | fzf --query "$LBUFFER" | cut -d "/" -f 2,3)
   [[ -n "$selected_dir" ]] && {
     BUFFER="gh repo view --web ${selected_dir}"
     zle accept-line
@@ -147,7 +149,7 @@ function fzf-git-branch() {
   branches=$(git branch --format='%(refname:short)' 2>/dev/null)
   [[ -z "$branches" ]] && return 0
 
-  selected=$(print -r -- "$branches" | fzf --query "$LBUFFER") || return 0
+  selected=$(print -r -- "$branches" | fzf --query "$LBUFFER")
   [[ -n "$selected" ]] && {
     BUFFER="git checkout ${selected}"
     zle accept-line
@@ -165,7 +167,7 @@ function fzf-git-branch-delete() {
   branches=$(git branch --format='%(refname:short)' 2>/dev/null)
   [[ -z "$branches" ]] && return 0
 
-  selected=$(print -r -- "$branches" | fzf -m --query "$LBUFFER" | tr '\n' ' ') || return 0
+  selected=$(print -r -- "$branches" | fzf -m --query "$LBUFFER" | tr '\n' ' ')
   [[ -n "$selected" ]] && {
     BUFFER="git branch -d ${selected}"
     zle accept-line
@@ -184,7 +186,7 @@ function fzf-gwq() {
   list=$(gwq list --json | jq -r '.[] | (if (.path | contains("/worktrees/")) then "  " else "● " end) + .branch + "\t" + .path')
   [[ -z "$list" ]] && return 0
 
-  selected=$(print -r -- "$list" | fzf --query "$LBUFFER" --with-nth=1 --delimiter='\t') || return 0
+  selected=$(print -r -- "$list" | fzf --query "$LBUFFER" --with-nth=1 --delimiter='\t')
   [[ -n "$selected" ]] && {
     local selected_dir=$(echo "$selected" | cut -f2)
     BUFFER="cd ${selected_dir}"
