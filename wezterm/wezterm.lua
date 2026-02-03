@@ -20,6 +20,17 @@ wezterm.on("gui-startup", function(cmd)
 	window:gui_window():toggle_fullscreen()
 end)
 
+-- フォーカス時にフルスクリーンでなければ自動で最大化（ディスプレイ切替対策）
+wezterm.on("window-focus-changed", function(window, pane)
+	if window:is_focused() then
+		local overrides = window:get_config_overrides() or {}
+		-- フルスクリーン状態でない場合のみ適用
+		if not window:get_dimensions().is_full_screen then
+			window:toggle_fullscreen()
+		end
+	end
+end)
+
 -- 閉じる確認ダイアログを無効化
 config.window_close_confirmation = "NeverPrompt"
 
