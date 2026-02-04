@@ -95,7 +95,7 @@ function fzf-select-history() {
   history=$(history -nr 1 | awk '!a[$0]++')
   [[ -z "$history" ]] && return 0
 
-  selected=$(print -r -- "$history" | fzf --query "$LBUFFER")
+  selected=$(print -r -- "$history" | fzf --tiebreak=index --query "$LBUFFER")
   if [[ -n "$selected" ]]; then
     BUFFER="${selected//\\n/$'\n'}"
     CURSOR=$#BUFFER
