@@ -25,6 +25,17 @@ end)
 
 return {
 	mouse_bindings = {
+		-- コマンドキー+ドラッグでのウィンドウ移動を無効化
+		{
+			event = { Down = { streak = 1, button = "Left" } },
+			mods = "SUPER",
+			action = act.Nop,
+		},
+		{
+			event = { Drag = { streak = 1, button = "Left" } },
+			mods = "SUPER",
+			action = act.Nop,
+		},
 		-- マウスホイールでスクロール
 		{
 			event = { Down = { streak = 1, button = { WheelUp = 1 } } },

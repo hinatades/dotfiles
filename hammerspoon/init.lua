@@ -78,6 +78,8 @@ end)
 hs.hotkey.bind({"cmd", "shift"}, "h", function()
   local win = hs.window.focusedWindow()
   if not win then return end
+  -- WezTermの場合は何もしない
+  if win:application():name() == APP_NAME then return end
   local f = win:frame()
   local screen = win:screen()
   local max = screen:frame()
@@ -93,6 +95,8 @@ end)
 hs.hotkey.bind({"cmd", "shift"}, "l", function()
   local win = hs.window.focusedWindow()
   if not win then return end
+  -- WezTermの場合は何もしない
+  if win:application():name() == APP_NAME then return end
   local f = win:frame()
   local screen = win:screen()
   local max = screen:frame()
@@ -108,6 +112,8 @@ end)
 hs.hotkey.bind({"cmd", "shift"}, "j", function()
   local win = hs.window.focusedWindow()
   if not win then return end
+  -- WezTermの場合は何もしない
+  if win:application():name() == APP_NAME then return end
   win:maximize()
 end)
 
@@ -115,6 +121,8 @@ end)
 hs.hotkey.bind({"cmd", "shift"}, "k", function()
   local win = hs.window.focusedWindow()
   if not win then return end
+  -- WezTermの場合は何もしない
+  if win:application():name() == APP_NAME then return end
   local f = win:frame()
   local screen = win:screen()
   local max = screen:frame()
