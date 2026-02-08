@@ -110,6 +110,12 @@ return {
 		{ key = "c", mods = "SUPER", action = act.CopyTo("Clipboard") },
 		-- 貼り付け
 		{ key = "v", mods = "SUPER", action = act.PasteFrom("Clipboard") },
+		-- 検索
+		{ key = "f", mods = "SUPER", action = act.Search("CurrentSelectionOrEmptyString") },
+		{ key = "f", mods = "SHIFT|CTRL", action = act.Search("CurrentSelectionOrEmptyString") },
+
+		-- IME用のキーバインドをパススルー（日本語入力のカタカナ変換など）
+		{ key = "k", mods = "CTRL", action = act.SendKey { key = "k", mods = "CTRL" } },
 
 		-- Pane作成
 		{ key = "|", mods = "LEADER|SHIFT", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
