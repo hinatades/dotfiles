@@ -11,6 +11,8 @@ return {
         CursorLine = { bg = "#121212" }, -- ctermbg=233
         CursorColumn = { bg = "#121212" }, -- ctermbg=233
         Normal = { bg = "NONE" }, -- transparent background
+        -- Visual mode selection (green theme)
+        Visual = { bg = "#2d5a40", fg = "NONE" },
       },
     })
     require("onedark").load()
