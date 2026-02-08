@@ -64,16 +64,6 @@ return {
     ft = "graphql",
   },
 
-  -- PlantUML
-  {
-    "aklt/plantuml-syntax",
-    ft = "plantuml",
-    config = function()
-      -- Migrated from .vimrc
-      vim.g.plantuml_executable_script = vim.fn.expand("$HOME/ghq/github.com/hinatades/dotfiles/plantuml.sh")
-    end,
-  },
-
   -- C++ formatting
   {
     "rhysd/vim-clang-format",
