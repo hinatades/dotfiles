@@ -65,10 +65,20 @@ hs.hotkey.bind({ "ctrl" }, "return", function()
   -- 起動しているが非表示 → 表示
   app:activate()
 
-  -- 表示後にフルスクリーンでなければフルスクリーンにする
+  -- メインディスプレイに移動してからフルスクリーンにする
   hs.timer.doAfter(0.1, function()
     local a = hs.application.find(APP_NAME)
-    if a then ensureFullscreen(a) end
+    if a then
+      local win = getTerminalWindow(a)
+      if win then
+        local primaryScreen = hs.screen.primaryScreen()
+        -- 現在のスクリーンがメインでない場合のみ移動
+        if win:screen() ~= primaryScreen then
+          win:moveToScreen(primaryScreen)
+        end
+      end
+      ensureFullscreen(a)
+    end
   end)
 end)
 
