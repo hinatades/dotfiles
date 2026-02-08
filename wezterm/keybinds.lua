@@ -100,7 +100,12 @@ wezterm.on("update-right-status", function(window, pane)
 	local time = wezterm.strftime("%Y-%m-%d(%a) %H:%M:%S")
 	table.insert(cells, wezterm.nerdfonts.md_clock .. " " .. time)
 
-	window:set_right_status(table.concat(cells, "  │  ") .. "   ")
+	-- Format with no background color
+	local status_text = table.concat(cells, "  │  ") .. "   "
+	window:set_right_status(wezterm.format({
+		{ Background = { Color = "none" } },
+		{ Text = status_text },
+	}))
 end)
 
 return {
