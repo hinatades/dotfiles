@@ -1,6 +1,13 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
 
+-- Cache for system stats (updated every 10 seconds)
+local system_stats_cache = {
+	cpu = nil,
+	mem = nil,
+	last_update = 0,
+}
+
 -- Show status: leader key, key table, and clock with icons
 wezterm.on("update-right-status", function(window, pane)
 	local cells = {}
@@ -16,8 +23,81 @@ wezterm.on("update-right-status", function(window, pane)
 		table.insert(cells, wezterm.nerdfonts.md_table .. " " .. key_table)
 	end
 
+	-- Update system stats every 10 seconds
+	local current_time = os.time()
+	if current_time - system_stats_cache.last_update >= 10 then
+		-- CPU usage (0-100%)
+		local success, cpu_stdout, cpu_stderr = wezterm.run_child_process({
+			"sh",
+			"-c",
+			"top -l 1 | grep 'CPU usage' | awk '{print $3}' | sed 's/%//'",
+		})
+		if success then
+			local cpu = tonumber(cpu_stdout)
+			if cpu then
+				system_stats_cache.cpu = string.format("%.1f%%", cpu)
+			end
+		end
+
+		-- Memory usage (percentage and top 3 processes)
+		local success, mem_stdout, mem_stderr = wezterm.run_child_process({
+			"sh",
+			"-c",
+			[[
+				total_mem=$(sysctl -n hw.memsize)
+				total_gb=$(echo "scale=1; $total_mem / 1024 / 1024 / 1024" | bc)
+
+				physmem=$(top -l 1 | grep PhysMem)
+				used=$(echo "$physmem" | awk '{print $2}' | sed 's/G//')
+
+				# If used is in M (megabytes), convert to G
+				if echo "$physmem" | grep -q "^PhysMem: [0-9]*M used"; then
+					used=$(echo "scale=1; $used / 1024" | bc)
+				fi
+
+				percentage=$(echo "scale=1; $used * 100 / $total_gb" | bc)
+
+				# Get top 3 memory consuming processes
+				top3=$(ps aux | sort -rk 4,4 | head -n 4 | tail -n 3 | awk '{print $11}' | xargs -I {} basename {} | sed 's/^com\.//;s/\..*//;s/^Google //' | head -c 30)
+
+				echo "$percentage|$top3"
+			]],
+		})
+		if success then
+			local percentage, processes = mem_stdout:match("([%d.]+)|(.+)")
+			if percentage and processes then
+				-- Truncate long process names and join
+				local proc_list = {}
+				for proc in processes:gmatch("[^\n]+") do
+					-- Shorten common long names
+					proc = proc:gsub("Google Chrome Helper", "Chrome")
+					proc = proc:gsub("Google Chrome", "Chrome")
+					proc = proc:gsub("Microsoft", "MS")
+					if #proc > 10 then
+						proc = proc:sub(1, 10)
+					end
+					table.insert(proc_list, proc)
+				end
+				local top3_str = table.concat(proc_list, ",")
+				system_stats_cache.mem = string.format("%.1f%% [%s]", tonumber(percentage), top3_str)
+			end
+		end
+
+		system_stats_cache.last_update = current_time
+	end
+
+	-- Display cached CPU stats
+	if system_stats_cache.cpu then
+		table.insert(cells, wezterm.nerdfonts.md_chip .. " CPU " .. system_stats_cache.cpu)
+	end
+
+	-- Display cached memory stats
+	if system_stats_cache.mem then
+		table.insert(cells, wezterm.nerdfonts.md_memory .. " MEM " .. system_stats_cache.mem)
+	end
+
 	-- Date and time with icon
-	local time = wezterm.strftime("%Y-%m-%d %H:%M:%S")
+	local time = wezterm.strftime("%Y-%m-%d(%a) %H:%M:%S")
 	table.insert(cells, wezterm.nerdfonts.md_clock .. " " .. time)
 
 	window:set_right_status(table.concat(cells, "  │  ") .. "   ")

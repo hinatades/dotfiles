@@ -55,6 +55,8 @@ config.hide_tab_bar_if_only_one_tab = true
 config.window_frame = {
 	inactive_titlebar_bg = "none",
 	active_titlebar_bg = "none",
+	font = wezterm.font("HackGen35 Console NF"),
+	font_size = 16.0,
 }
 
 -- タブバーを背景色に合わせる
