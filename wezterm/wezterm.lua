@@ -5,6 +5,8 @@ config.automatically_reload_config = true
 config.font = wezterm.font("HackGen35 Console NF")
 config.font_size = 18.0
 config.use_ime = true
+-- macOSのIMEキーバインド（Ctrl+K等）を有効にする
+config.macos_forward_to_ime_modifier_mask = "SHIFT|CTRL"
 config.window_background_opacity = 0.85
 config.macos_window_background_blur = 0
 
