@@ -39,7 +39,7 @@ wezterm.on("update-right-status", function(window, pane)
 			end
 		end
 
-		-- Memory usage (percentage and top 3 processes)
+		-- Memory usage (percentage and top 3 processes with their usage)
 		local success, mem_stdout, mem_stderr = wezterm.run_child_process({
 			"sh",
 			"-c",
@@ -57,8 +57,16 @@ wezterm.on("update-right-status", function(window, pane)
 
 				percentage=$(echo "scale=1; $used * 100 / $total_gb" | bc)
 
-				# Get top 3 memory consuming processes
-				top3=$(ps aux | sort -rk 4,4 | head -n 4 | tail -n 3 | awk '{print $11}' | xargs -I {} basename {} | sed 's/^com\.//;s/\..*//;s/^Google //' | head -c 30)
+				# Get top 3 memory consuming processes with memory usage
+				top3=$(ps aux | sort -rk 4,4 | head -n 4 | tail -n 3 | awk '{
+					mem_gb = $6 / 1024 / 1024;
+					cmd = $11;
+					gsub(".*/", "", cmd);
+					if (mem_gb >= 1)
+						printf "%s:%.1fG\n", cmd, mem_gb;
+					else
+						printf "%s:%.0fM\n", cmd, $6 / 1024;
+				}')
 
 				echo "$percentage|$top3"
 			]],
@@ -66,17 +74,20 @@ wezterm.on("update-right-status", function(window, pane)
 		if success then
 			local percentage, processes = mem_stdout:match("([%d.]+)|(.+)")
 			if percentage and processes then
-				-- Truncate long process names and join
+				-- Process and format each entry
 				local proc_list = {}
 				for proc in processes:gmatch("[^\n]+") do
-					-- Shorten common long names
-					proc = proc:gsub("Google Chrome Helper", "Chrome")
-					proc = proc:gsub("Google Chrome", "Chrome")
-					proc = proc:gsub("Microsoft", "MS")
-					if #proc > 10 then
-						proc = proc:sub(1, 10)
+					local name, size = proc:match("([^:]+):(.+)")
+					if name and size then
+						-- Shorten common long names
+						name = name:gsub("Google Chrome Helper", "Chrome")
+						name = name:gsub("Google Chrome", "Chrome")
+						name = name:gsub("Microsoft", "MS")
+						if #name > 10 then
+							name = name:sub(1, 10)
+						end
+						table.insert(proc_list, name .. "(" .. size .. ")")
 					end
-					table.insert(proc_list, proc)
 				end
 				local top3_str = table.concat(proc_list, ",")
 				system_stats_cache.mem = string.format("%.1f%% [%s]", tonumber(percentage), top3_str)
