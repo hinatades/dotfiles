@@ -39,23 +39,28 @@ wezterm.on("update-right-status", function(window, pane)
 			end
 		end
 
-		-- Memory usage (percentage and top 3 processes with their usage)
+		-- Memory usage (actual usage excluding cache, and top 3 processes)
 		local success, mem_stdout, mem_stderr = wezterm.run_child_process({
 			"sh",
 			"-c",
 			[[
-				total_mem=$(sysctl -n hw.memsize)
-				total_gb=$(echo "scale=1; $total_mem / 1024 / 1024 / 1024" | bc)
+				# Get actual memory pressure (excludes cache/inactive memory)
+				mem_pressure=$(memory_pressure 2>/dev/null | grep "System-wide memory free percentage" | awk '{print $5}' | sed 's/%//')
 
-				physmem=$(top -l 1 | grep PhysMem)
-				used=$(echo "$physmem" | awk '{print $2}' | sed 's/G//')
-
-				# If used is in M (megabytes), convert to G
-				if echo "$physmem" | grep -q "^PhysMem: [0-9]*M used"; then
-					used=$(echo "scale=1; $used / 1024" | bc)
+				if [ -n "$mem_pressure" ]; then
+					# Calculate used percentage (100 - free)
+					percentage=$(echo "scale=1; 100 - $mem_pressure" | bc)
+				else
+					# Fallback to top-based calculation if memory_pressure fails
+					total_mem=$(sysctl -n hw.memsize)
+					total_gb=$(echo "scale=1; $total_mem / 1024 / 1024 / 1024" | bc)
+					physmem=$(top -l 1 | grep PhysMem)
+					used=$(echo "$physmem" | awk '{print $2}' | sed 's/G//')
+					if echo "$physmem" | grep -q "^PhysMem: [0-9]*M used"; then
+						used=$(echo "scale=1; $used / 1024" | bc)
+					fi
+					percentage=$(echo "scale=1; $used * 100 / $total_gb" | bc)
 				fi
-
-				percentage=$(echo "scale=1; $used * 100 / $total_gb" | bc)
 
 				# Get top 3 memory consuming processes with memory usage
 				top3=$(ps aux | sort -rk 4,4 | head -n 4 | tail -n 3 | awk '{
