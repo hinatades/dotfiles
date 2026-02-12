@@ -42,10 +42,10 @@ config.scrollback_lines = 2000
 -- スクロールバーを無効化（見切れ防止）
 config.enable_scroll_bar = false
 
--- ウィンドウパディング（画面端からの余白、下部の見切れ防止）
+-- ウィンドウパディング（画面端からの余白、見切れ防止）
 config.window_padding = {
-	left = 0,
-	right = 0,
+	left = 2,
+	right = 2,
 	top = 0,
 	bottom = 2,
 }
