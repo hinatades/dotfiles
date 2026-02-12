@@ -36,6 +36,16 @@ vim.api.nvim_create_user_command("Ruff", function()
   conform.format({ bufnr = vim.api.nvim_get_current_buf() })
 end, {})
 
+-- Generic formatter using conform.nvim
+vim.api.nvim_create_user_command("Format", function()
+  local ok, conform = pcall(require, "conform")
+  if not ok then
+    vim.notify("conform.nvim is not installed", vim.log.levels.ERROR)
+    return
+  end
+  conform.format({ bufnr = vim.api.nvim_get_current_buf() })
+end, {})
+
 -- TSX filetype detection (migrated from .vimrc autocmd)
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
   pattern = "*.tsx",
