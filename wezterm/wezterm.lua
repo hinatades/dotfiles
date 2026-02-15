@@ -13,6 +13,9 @@ config.macos_window_background_blur = 0
 -- カーソル設定
 config.default_cursor_style = "BlinkingUnderline"
 
+-- ベル音を無効化
+config.audible_bell = "Disabled"
+
 -- macOS非ネイティブフルスクリーン（現在のワークスペースでメニューバーも隠す）
 config.native_macos_fullscreen_mode = false
 
