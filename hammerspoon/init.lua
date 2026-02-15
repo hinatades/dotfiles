@@ -1,62 +1,17 @@
 -- Terminal app to toggle with Ctrl+Return
 local APP_NAME = "WezTerm"
 
--- ターミナルのウィンドウを取得
-local function getTerminalWindow(app)
-  if not app then return nil end
-  local wins = app:allWindows()
-  if wins and #wins > 0 then
-    return wins[1]
-  end
-  return nil
-end
-
--- ウィンドウがフルスクリーン相当かチェック（非ネイティブフルスクリーン対応）
-local function isFullscreenSize(win)
-  if not win then return false end
-  local winFrame = win:frame()
-  local screenFrame = win:screen():fullFrame()
-  -- ウィンドウが画面全体を覆っているかチェック（数ピクセルの誤差を許容）
-  return math.abs(winFrame.x - screenFrame.x) < 5
-    and math.abs(winFrame.y - screenFrame.y) < 5
-    and math.abs(winFrame.w - screenFrame.w) < 5
-    and math.abs(winFrame.h - screenFrame.h) < 5
-end
-
--- WezTermにCmd+Enterを送信してフルスクリーンにする
-local function sendFullscreenKey(app)
-  if not app then return end
-  hs.eventtap.keyStroke({"cmd"}, "return", 0, app)
-end
-
--- フルスクリーンでなければフルスクリーンにする
-local function ensureFullscreen(app, tries)
-  tries = tries or 15
-  local win = getTerminalWindow(app)
-  if win then
-    if not isFullscreenSize(win) then
-      sendFullscreenKey(app)
-    end
-    return
-  end
-  if tries <= 0 then return end
-  hs.timer.doAfter(0.05, function()
-    ensureFullscreen(app, tries - 1)
-  end)
-end
-
 -- Terminal toggle (Ctrl+Return)
 hs.hotkey.bind({ "ctrl" }, "return", function()
   local app = hs.application.find(APP_NAME)
 
-  -- アプリが起動していない場合は起動
+  -- アプリが起動していない場合は起動（WezTermの設定で自動フルスクリーン）
   if not app then
     hs.application.launchOrFocus(APP_NAME)
-    -- WezTermのgui-startupでフルスクリーンになるので追加処理は不要
     return
   end
 
-  -- 前面に見えているなら「非表示」
+  -- 前面に見えているなら非表示
   if app:isFrontmost() then
     app:hide()
     return
@@ -64,22 +19,6 @@ hs.hotkey.bind({ "ctrl" }, "return", function()
 
   -- 起動しているが非表示 → 表示
   app:activate()
-
-  -- メインディスプレイに移動してからフルスクリーンにする
-  hs.timer.doAfter(0.1, function()
-    local a = hs.application.find(APP_NAME)
-    if a then
-      local win = getTerminalWindow(a)
-      if win then
-        local primaryScreen = hs.screen.primaryScreen()
-        -- 現在のスクリーンがメインでない場合のみ移動
-        if win:screen() ~= primaryScreen then
-          win:moveToScreen(primaryScreen)
-        end
-      end
-      ensureFullscreen(a)
-    end
-  end)
 end)
 
 -- Window Management (Cmd+Shift+h/j/k/l)
