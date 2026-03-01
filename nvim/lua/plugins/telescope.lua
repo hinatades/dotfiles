@@ -54,9 +54,16 @@ return {
           },
           file_ignore_patterns = {
             "node_modules",
-            ".git/",
+            "%.git/",
+            "%.cache/",
+            "%.DS_Store",
             "%.lock$",
             "lazy%-lock%.json",
+          },
+        },
+        pickers = {
+          find_files = {
+            hidden = true,
           },
         },
         extensions = {
