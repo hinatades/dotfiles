@@ -108,6 +108,35 @@ if [ -e $HAMMERSPOON_DIR ]; then
 fi
 ln -f -s $SCRIPT_DIR/hammerspoon $HAMMERSPOON_DIR
 
+# Handle Claude Code configuration (~/.claude)
+# ~/.claude自体はClaude Codeが管理するため、設定ファイルのみ個別にシンボリックリンク
+CLAUDE_DIR="$HOME/.claude"
+mkdir -p "$CLAUDE_DIR"
+
+CLAUDE_SETTINGS="$CLAUDE_DIR/settings.json"
+if [ -e $CLAUDE_SETTINGS ] && [ ! -L $CLAUDE_SETTINGS ]; then
+    cp $CLAUDE_SETTINGS "$CLAUDE_SETTINGS.bak"
+    rm $CLAUDE_SETTINGS
+    echo "Took a backup of $CLAUDE_SETTINGS"
+fi
+ln -f -s $SCRIPT_DIR/claude/settings.json $CLAUDE_SETTINGS
+
+CLAUDE_COMMANDS="$CLAUDE_DIR/commands"
+if [ -e $CLAUDE_COMMANDS ] && [ ! -L $CLAUDE_COMMANDS ]; then
+    cp -r $CLAUDE_COMMANDS "$CLAUDE_COMMANDS.bak"
+    rm -r $CLAUDE_COMMANDS
+    echo "Took a backup of $CLAUDE_COMMANDS"
+fi
+ln -f -s $SCRIPT_DIR/claude/commands $CLAUDE_COMMANDS
+
+CLAUDE_SKILLS="$CLAUDE_DIR/skills"
+if [ -e $CLAUDE_SKILLS ] && [ ! -L $CLAUDE_SKILLS ]; then
+    cp -r $CLAUDE_SKILLS "$CLAUDE_SKILLS.bak"
+    rm -r $CLAUDE_SKILLS
+    echo "Took a backup of $CLAUDE_SKILLS"
+fi
+ln -f -s $SCRIPT_DIR/claude/skills $CLAUDE_SKILLS
+
 # Install gwq (Git Worktree Manager)
 if command -v brew &> /dev/null; then
     if ! command -v gwq &> /dev/null; then
