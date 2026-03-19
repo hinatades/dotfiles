@@ -1,22 +1,5 @@
 # CLAUDE.md
 
-Guidelines for Claude Code working in this repository.
-
-## Communication
-
-- Respond in Japanese
-- Be concise and direct
-
-## Coding
-
-- Prefer simplicity over excessive robustness
-- Follow existing code style and patterns
-
-## Commits & PRs
-
-- PR descriptions should be concise, clear, and in Japanese
-- Pass lint/format checks before pushing
-
 ## Structure
 
 - `nvim/` — Neovim configuration
