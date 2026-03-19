@@ -26,7 +26,7 @@ Before creating a PR, check:
 Write the PR body with the following sections:
 
 1. **## Why** — Why this change is needed. Describe the problem or inconvenience that existed before.
-2. **## What** — What changed. Bullet points, concise.
+2. **## Changes** — What changed. Bullet points, concise.
 3. **## Notes** (optional) — Before/after comparisons, concrete values, or other context that helps the reviewer make a decision.
 
 ### Principles
