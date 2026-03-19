@@ -1,15 +1,15 @@
-現在のブランチのPRに対するレビューコメントを確認し、対応する。
+Review and address review comments on the current branch's PR.
 
-## 手順
+## Steps
 
-1. `gh` コマンドで現在のブランチのPR番号を取得し、レビューコメントを全件取得する。
-2. 各指摘について対応方針を判断する:
-   - 妥当かつシンプルに直せるもの → 対応する
-   - 妥当でも実装の複雑さが増しすぎるもの → 対応しない
-   - 迷ったらシンプルさを優先する
-3. 対応するものはコードを修正する。
-4. 全ての指摘に対し、元のコメントに返信する形でGitHub上にコメントする:
-   - 対応した場合: 何を変更したか端的に書く
-   - 対応しない場合: 理由を一行で書く（例: 「複雑さが増すためスキップ」）
-5. ビルドとlintを通す。
-6. コミットしてpushする。
+1. Use `gh` to get the PR number for the current branch and fetch all review comments.
+2. For each comment, decide the approach:
+   - Valid and simple to fix → address it
+   - Valid but adds too much complexity → skip it
+   - When in doubt, prefer simplicity
+3. Fix the code for comments you're addressing.
+4. Reply to every comment on GitHub:
+   - If addressed: briefly state what was changed
+   - If skipped: one-line reason (e.g., "Skipping to avoid added complexity")
+5. Run build and lint.
+6. Commit and push.
