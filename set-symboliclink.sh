@@ -137,6 +137,14 @@ if [ -e $CLAUDE_SKILLS ] && [ ! -L $CLAUDE_SKILLS ]; then
 fi
 ln -f -s $SCRIPT_DIR/claude/skills $CLAUDE_SKILLS
 
+CLAUDE_INSTRUCTIONS="$CLAUDE_DIR/instructions.md"
+if [ -e $CLAUDE_INSTRUCTIONS ] && [ ! -L $CLAUDE_INSTRUCTIONS ]; then
+    cp $CLAUDE_INSTRUCTIONS "$CLAUDE_INSTRUCTIONS.bak"
+    rm $CLAUDE_INSTRUCTIONS
+    echo "Took a backup of $CLAUDE_INSTRUCTIONS"
+fi
+ln -f -s $SCRIPT_DIR/claude/instructions.md $CLAUDE_INSTRUCTIONS
+
 # Install gwq (Git Worktree Manager)
 if command -v brew &> /dev/null; then
     if ! command -v gwq &> /dev/null; then
