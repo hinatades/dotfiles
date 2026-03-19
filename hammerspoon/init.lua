@@ -11,37 +11,34 @@ local function getTerminalWindow(app)
   return nil
 end
 
--- ウィンドウがフルスクリーン相当かチェック（非ネイティブフルスクリーン対応）
-local function isFullscreenSize(win)
-  if not win then return false end
-  local winFrame = win:frame()
-  local screenFrame = win:screen():fullFrame()
-  -- ウィンドウが画面全体を覆っているかチェック（数ピクセルの誤差を許容）
-  return math.abs(winFrame.x - screenFrame.x) < 5
-    and math.abs(winFrame.y - screenFrame.y) < 5
-    and math.abs(winFrame.w - screenFrame.w) < 5
-    and math.abs(winFrame.h - screenFrame.h) < 5
+-- 外部ディスプレイがあればそれを、なければ内蔵ディスプレイを返す
+local function getMainScreen()
+  for _, s in ipairs(hs.screen.allScreens()) do
+    if s ~= hs.screen.find("Built%-in") then
+      return s
+    end
+  end
+  return hs.screen.primaryScreen()
 end
 
--- WezTermにCmd+Enterを送信してフルスクリーンにする
-local function sendFullscreenKey(app)
-  if not app then return end
-  hs.eventtap.keyStroke({"cmd"}, "return", 0, app)
+-- ウィンドウをメインディスプレイにフルスクリーン配置
+local function moveToMainFullscreen(win)
+  if not win then return end
+  win:setFrame(getMainScreen():fullFrame())
 end
 
--- フルスクリーンでなければフルスクリーンにする
-local function ensureFullscreen(app, tries)
-  tries = tries or 15
+-- ウィンドウが出現するのを待ってからフルスクリーン配置
+local function waitAndFullscreen(tries)
+  tries = tries or 20
+  local app = hs.application.find(APP_NAME)
   local win = getTerminalWindow(app)
   if win then
-    if not isFullscreenSize(win) then
-      sendFullscreenKey(app)
-    end
+    moveToMainFullscreen(win)
     return
   end
   if tries <= 0 then return end
-  hs.timer.doAfter(0.05, function()
-    ensureFullscreen(app, tries - 1)
+  hs.timer.doAfter(0.1, function()
+    waitAndFullscreen(tries - 1)
   end)
 end
 
@@ -49,10 +46,10 @@ end
 hs.hotkey.bind({ "ctrl" }, "return", function()
   local app = hs.application.find(APP_NAME)
 
-  -- アプリが起動していない場合は起動
+  -- アプリが起動していない場合は起動してフルスクリーン配置
   if not app then
     hs.application.launchOrFocus(APP_NAME)
-    -- WezTermのgui-startupでフルスクリーンになるので追加処理は不要
+    waitAndFullscreen()
     return
   end
 
@@ -62,23 +59,12 @@ hs.hotkey.bind({ "ctrl" }, "return", function()
     return
   end
 
-  -- 起動しているが非表示 → 表示
+  -- 起動しているが非表示 → メインディスプレイに表示
   app:activate()
-
-  -- メインディスプレイに移動してからフルスクリーンにする
-  hs.timer.doAfter(0.1, function()
+  hs.timer.doAfter(0.15, function()
     local a = hs.application.find(APP_NAME)
-    if a then
-      local win = getTerminalWindow(a)
-      if win then
-        local primaryScreen = hs.screen.primaryScreen()
-        -- 現在のスクリーンがメインでない場合のみ移動
-        if win:screen() ~= primaryScreen then
-          win:moveToScreen(primaryScreen)
-        end
-      end
-      ensureFullscreen(a)
-    end
+    if not a then return end
+    moveToMainFullscreen(getTerminalWindow(a))
   end)
 end)
 
@@ -88,41 +74,24 @@ end)
 hs.hotkey.bind({"cmd", "shift"}, "h", function()
   local win = hs.window.focusedWindow()
   if not win then return end
-  -- WezTermの場合は何もしない
   if win:application():name() == APP_NAME then return end
-  local f = win:frame()
-  local screen = win:screen()
-  local max = screen:frame()
-
-  f.x = max.x
-  f.y = max.y
-  f.w = max.w / 2
-  f.h = max.h
-  win:setFrame(f)
+  local max = win:screen():frame()
+  win:setFrame({ x = max.x, y = max.y, w = max.w / 2, h = max.h })
 end)
 
 -- l: 横幅を1/2して右に配置
 hs.hotkey.bind({"cmd", "shift"}, "l", function()
   local win = hs.window.focusedWindow()
   if not win then return end
-  -- WezTermの場合は何もしない
   if win:application():name() == APP_NAME then return end
-  local f = win:frame()
-  local screen = win:screen()
-  local max = screen:frame()
-
-  f.x = max.x + (max.w / 2)
-  f.y = max.y
-  f.w = max.w / 2
-  f.h = max.h
-  win:setFrame(f)
+  local max = win:screen():frame()
+  win:setFrame({ x = max.x + max.w / 2, y = max.y, w = max.w / 2, h = max.h })
 end)
 
 -- j: 最大化
 hs.hotkey.bind({"cmd", "shift"}, "j", function()
   local win = hs.window.focusedWindow()
   if not win then return end
-  -- WezTermの場合は何もしない
   if win:application():name() == APP_NAME then return end
   win:maximize()
 end)
@@ -131,17 +100,11 @@ end)
 hs.hotkey.bind({"cmd", "shift"}, "k", function()
   local win = hs.window.focusedWindow()
   if not win then return end
-  -- WezTermの場合は何もしない
   if win:application():name() == APP_NAME then return end
-  local f = win:frame()
-  local screen = win:screen()
-  local max = screen:frame()
-
-  f.w = max.w * 0.8
-  f.h = max.h * 0.8
-  f.x = max.x + (max.w - f.w) / 2
-  f.y = max.y + (max.h - f.h) / 2
-  win:setFrame(f)
+  local max = win:screen():frame()
+  local w = max.w * 0.8
+  local h = max.h * 0.8
+  win:setFrame({ x = max.x + (max.w - w) / 2, y = max.y + (max.h - h) / 2, w = w, h = h })
 end)
 
 -- 設定の再読み込み
