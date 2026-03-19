@@ -10,6 +10,7 @@ My macOS Dotfiles.
 - **Multiplexer**: WezTerm built-in (tmux configuration also available if preferred)
 - **Fuzzy Finder**: fzf integration for history, repository navigation, and file search
 - **Window Manager**: [Hammerspoon](https://www.hammerspoon.org/) for window management
+- **AI Assistant**: [Claude Code](https://claude.com/claude-code) global settings (permissions, instructions, skills)
 
 ## Configuration Files
 
@@ -19,6 +20,7 @@ My macOS Dotfiles.
 - `starship.toml` - Starship prompt configuration
 - `wezterm/` - WezTerm terminal configuration with tmux-style keybindings
 - `hammerspoon/` - Hammerspoon window management configuration
+- `claude/` - Claude Code global settings (symlinked to `~/.claude/`)
 - `set-symboliclink.sh` - Setup script for creating symbolic links
 
 ## Dropbox Sync
