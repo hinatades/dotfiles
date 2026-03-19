@@ -2,7 +2,7 @@
 
 ## Communication
 - Respond in Japanese
-- Start with the conclusion or action, not the reasoning
+- Follow Progressive Disclosure: start with the conclusion or action, not the reasoning
 - Show details only when asked or when a decision requires user input
 - When presenting options, list them briefly — elaborate only if the user asks
 
