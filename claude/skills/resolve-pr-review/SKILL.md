@@ -1,5 +1,5 @@
 ---
-name: resolve-review
+name: resolve-pr-review
 description: Review and resolve PR review comments on the current branch
 user-invocable: true
 disable-model-invocation: false
