@@ -23,14 +23,14 @@ Before creating a PR, check:
 
 ### Structure
 
-PRの本文は以下の構成で書く:
+Write the PR body with the following sections:
 
-1. **## 変更内容** — 何を変えたか。箇条書きで端的に。
-2. **## 背景・動機** — なぜこの変更が必要なのか。変更前にどんな問題・不便があったかを述べる。
-3. **## 補足**（任意） — before/after比較、具体的な数値、設定値の例など、レビュアーの判断を助ける情報があれば記載。
+1. **## 変更内容** — What changed. Bullet points, concise.
+2. **## 背景・動機** — Why this change is needed. Describe the problem or inconvenience that existed before.
+3. **## 補足** (optional) — Before/after comparisons, concrete values, or other context that helps the reviewer make a decision.
 
 ### Principles
 
-- レビュアーが「なぜこの変更を承認すべきか」を理解できることが最優先。
-- whatだけでなくwhyを必ず書く。whatだけのPRは承認判断ができない。
-- 各セクションは簡潔に。長文は不要。
+- The reviewer must be able to understand "why should I approve this?" — that is the top priority.
+- Always include why, not just what. A PR that only states what changed cannot be approved with confidence.
+- Keep each section concise. No long paragraphs.
