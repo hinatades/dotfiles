@@ -121,14 +121,6 @@ if [ -e $CLAUDE_SETTINGS ] && [ ! -L $CLAUDE_SETTINGS ]; then
 fi
 ln -f -s $SCRIPT_DIR/claude/settings.json $CLAUDE_SETTINGS
 
-CLAUDE_COMMANDS="$CLAUDE_DIR/commands"
-if [ -e $CLAUDE_COMMANDS ] && [ ! -L $CLAUDE_COMMANDS ]; then
-    cp -r $CLAUDE_COMMANDS "$CLAUDE_COMMANDS.bak"
-    rm -r $CLAUDE_COMMANDS
-    echo "Took a backup of $CLAUDE_COMMANDS"
-fi
-ln -f -s $SCRIPT_DIR/claude/commands $CLAUDE_COMMANDS
-
 CLAUDE_SKILLS="$CLAUDE_DIR/skills"
 if [ -e $CLAUDE_SKILLS ] && [ ! -L $CLAUDE_SKILLS ]; then
     cp -r $CLAUDE_SKILLS "$CLAUDE_SKILLS.bak"

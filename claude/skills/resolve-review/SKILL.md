@@ -1,4 +1,11 @@
-Review and address review comments on the current branch's PR.
+---
+name: resolve-review
+description: Review and resolve PR review comments on the current branch
+user-invocable: true
+disable-model-invocation: false
+---
+
+Review and resolve review comments on the current branch's PR.
 
 ## Steps
 
