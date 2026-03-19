@@ -25,9 +25,9 @@ Before creating a PR, check:
 
 Write the PR body with the following sections:
 
-1. **## 変更内容** — What changed. Bullet points, concise.
-2. **## 背景・動機** — Why this change is needed. Describe the problem or inconvenience that existed before.
-3. **## 補足** (optional) — Before/after comparisons, concrete values, or other context that helps the reviewer make a decision.
+1. **## What** — What changed. Bullet points, concise.
+2. **## Why** — Why this change is needed. Describe the problem or inconvenience that existed before.
+3. **## Notes** (optional) — Before/after comparisons, concrete values, or other context that helps the reviewer make a decision.
 
 ### Principles
 
