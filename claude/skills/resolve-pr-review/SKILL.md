@@ -20,3 +20,4 @@ Review and resolve review comments on the current branch's PR.
    - If skipped: one-line reason (e.g., "Skipping to avoid added complexity")
 5. Run build and lint.
 6. Commit and push.
+7. Resolve all review comment threads (both addressed and skipped) using `gh api` (GraphQL `resolveReviewThread` mutation) to mark them as resolved.
