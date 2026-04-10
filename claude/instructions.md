@@ -17,3 +17,4 @@
 - Commit at logical breakpoints
 - One logical change per commit
 - PR descriptions should be concise, clear, and in Japanese
+- Test Plan: only list essential verification steps. Omit nice-to-haves
