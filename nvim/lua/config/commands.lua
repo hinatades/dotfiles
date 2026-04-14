@@ -36,6 +36,16 @@ vim.api.nvim_create_user_command("Ruff", function()
   conform.format({ bufnr = vim.api.nvim_get_current_buf() })
 end, {})
 
+-- Prettier formatter
+vim.api.nvim_create_user_command("Prettier", function()
+  local ok, conform = pcall(require, "conform")
+  if not ok then
+    vim.notify("conform.nvim is not installed", vim.log.levels.ERROR)
+    return
+  end
+  conform.format({ formatters = { "prettier" }, bufnr = vim.api.nvim_get_current_buf() })
+end, {})
+
 -- Generic formatter using conform.nvim
 vim.api.nvim_create_user_command("Format", function()
   local ok, conform = pcall(require, "conform")

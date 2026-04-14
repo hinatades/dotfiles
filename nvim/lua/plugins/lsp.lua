@@ -5,6 +5,7 @@ return {
       ensure_installed = {
         "pyright", -- Python LSP server
         "ruff", -- Python linter/formatter
+        "prettier", -- Code formatter
       },
     },
   },
