@@ -343,8 +343,12 @@ return {
 			{ key = "v", mods = "NONE", action = act.CopyMode({ SetSelectionMode = "Cell" }) },
 			{ key = "v", mods = "CTRL", action = act.CopyMode({ SetSelectionMode = "Block" }) },
 			{ key = "V", mods = "NONE", action = act.CopyMode({ SetSelectionMode = "Line" }) },
-			-- コピー
-			{ key = "y", mods = "NONE", action = act.CopyTo("Clipboard") },
+			-- コピー（ヤンク後にコピーモードを閉じてハイライトを消す）
+			{
+				key = "y",
+				mods = "NONE",
+				action = act.Multiple({ { CopyTo = "Clipboard" }, { CopyMode = "Close" } }),
+			},
 
 			-- コピーモードを終了
 			{
