@@ -22,6 +22,7 @@ My macOS Dotfiles.
 - `hammerspoon/` - Hammerspoon window management configuration
 - `claude/` - Claude Code global settings (symlinked to `~/.claude/`)
 - `set-symboliclink.sh` - Setup script for creating symbolic links
+- `flake.nix` / `home.nix` - Home Manager flake for managing symlinks via Nix (alternative to the shell script)
 
 ## Dropbox Sync
 
@@ -71,6 +72,31 @@ cd $(ghq root)/github.com/hinatades/dotfiles
 ```
 
 This will create symbolic links for all configuration files.
+
+## Alternative: Home Manager (Nix)
+
+If you use [Nix](https://nixos.org/download/), you can manage the same symlinks declaratively with [Home Manager](https://github.com/nix-community/home-manager). The flake creates out-of-store symlinks pointing at the live repo, so edits in this directory take effect immediately — no rebuild required for content changes.
+
+```sh
+# Requires flakes enabled: add `experimental-features = nix-command flakes` to ~/.config/nix/nix.conf
+cd $(ghq root)/github.com/hinatades/dotfiles
+nix run home-manager/master -- switch --flake .#hinatades -b backup
+```
+
+The `-b backup` flag tells Home Manager to move any pre-existing conflicting files to `<name>.backup` instead of failing (needed on a fresh machine where `~/.zshrc` etc. already exist).
+
+For a different machine, add another entry under `homeConfigurations` in `flake.nix`:
+
+```nix
+"yourname" = mkHome {
+  system = "aarch64-darwin";    # or "x86_64-linux", etc.
+  username = "yourname";
+  homeDirectory = "/Users/yourname";
+  # optional: dotfilesPath = "/absolute/path/to/dotfiles";
+};
+```
+
+Then `nix run home-manager/master -- switch --flake .#yourname`.
 
 ## Version Managers
 
