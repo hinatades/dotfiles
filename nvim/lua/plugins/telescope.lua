@@ -35,8 +35,7 @@ return {
             "--hidden", -- search hidden files
             "--glob=!.git/", -- exclude .git
           },
-          -- Path display settings
-          path_display = { "smart" }, -- Smart path truncation
+          path_display = { "filename_first" },
           -- Layout settings
           layout_config = {
             horizontal = {
