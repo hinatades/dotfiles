@@ -14,7 +14,9 @@
 - Follow existing code style and patterns
 
 ## Commits & PRs
-- Commit at logical breakpoints
+- Commit incrementally as work progresses — never bundle multiple changes into one large commit
+- After finishing each logical unit (a fix, a refactor, a feature step), commit before starting the next
+- If a task touches multiple concerns, split into separate commits per concern
 - One logical change per commit
 - PR descriptions should be concise, clear, and in Japanese
 - Test Plan: only list essential verification steps. Omit nice-to-haves
