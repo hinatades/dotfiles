@@ -1,6 +1,9 @@
 # dotfiles
 
-My macOS Dotfiles.
+macOS dotfiles managed by a [Nix Home Manager](https://github.com/nix-community/home-manager) flake.
+
+> [!NOTE]
+> Nix is required. The flake manages symlinks declaratively; CLI tools and casks are installed separately via Homebrew.
 
 ## Features
 
@@ -21,8 +24,8 @@ My macOS Dotfiles.
 - `wezterm/` - WezTerm terminal configuration with tmux-style keybindings
 - `hammerspoon/` - Hammerspoon window management configuration
 - `claude/` - Claude Code global settings (symlinked to `~/.claude/`)
-- `set-symboliclink.sh` - Setup script for creating symbolic links
-- `flake.nix` / `home.nix` - Home Manager flake for managing symlinks via Nix (alternative to the shell script)
+- `flake.nix` / `home.nix` / `flake.lock` - Home Manager flake managing symlinks declaratively
+- `set-symboliclink.sh` - Plain-shell fallback for environments without Nix
 
 ## Dropbox Sync
 
@@ -35,13 +38,46 @@ This dotfiles setup syncs critical files across machines via Dropbox:
 
 ## Installation
 
-### 1. Install Required Tools
+### 1. Install Nix
 
-Install the following with [Homebrew](https://brew.sh/):
+Recommended: [Determinate Nix Installer](https://github.com/DeterminateSystems/nix-installer).
+
+```sh
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+```
+
+If using the upstream installer instead, enable flakes manually:
+
+```sh
+mkdir -p ~/.config/nix
+echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
+```
+
+### 2. Clone the repository
+
+```sh
+ghq get https://github.com/hinatades/dotfiles.git
+cd $(ghq root)/github.com/hinatades/dotfiles
+```
+
+### 3. Apply the flake
+
+```sh
+nix run home-manager/master -- switch --flake .#hinatades -b backup
+```
+
+`-b backup` renames any pre-existing conflicting files (e.g. `~/.zshrc`) to `<name>.backup` instead of failing.
+
+The flake uses `mkOutOfStoreSymlink`, so symlinks point at the live repo — edits take effect without rebuild.
+
+### 4. Install CLI tools and casks (Homebrew)
+
+The flake manages symlinks only. Install runtime tools separately:
 
 ```sh
 brew install zsh zsh-autosuggestions neovim fzf ripgrep clang-format ghq gh kubectl starship d-kuro/tap/gwq
 brew install --cask wezterm hammerspoon
+brew install goenv pyenv nodebrew
 ```
 
 > [!NOTE]
@@ -50,42 +86,9 @@ brew install --cask wezterm hammerspoon
 > brew install tmux reattach-to-user-namespace
 > ```
 
-### 2. Install Version Managers
+### Adding another machine
 
-```sh
-brew install goenv pyenv nodebrew
-```
-
-### 3. Clone Repository
-
-Clone the repository with [ghq](https://github.com/x-motemen/ghq):
-
-```sh
-ghq get https://github.com/hinatades/dotfiles.git
-cd $(ghq root)/github.com/hinatades/dotfiles
-```
-
-### 4. Run Setup Script
-
-```sh
-./set-symboliclink.sh
-```
-
-This will create symbolic links for all configuration files.
-
-## Alternative: Home Manager (Nix)
-
-If you use [Nix](https://nixos.org/download/), you can manage the same symlinks declaratively with [Home Manager](https://github.com/nix-community/home-manager). The flake creates out-of-store symlinks pointing at the live repo, so edits in this directory take effect immediately — no rebuild required for content changes.
-
-```sh
-# Requires flakes enabled: add `experimental-features = nix-command flakes` to ~/.config/nix/nix.conf
-cd $(ghq root)/github.com/hinatades/dotfiles
-nix run home-manager/master -- switch --flake .#hinatades -b backup
-```
-
-The `-b backup` flag tells Home Manager to move any pre-existing conflicting files to `<name>.backup` instead of failing (needed on a fresh machine where `~/.zshrc` etc. already exist).
-
-For a different machine, add another entry under `homeConfigurations` in `flake.nix`:
+Add an entry under `homeConfigurations` in `flake.nix`:
 
 ```nix
 "yourname" = mkHome {
@@ -96,7 +99,11 @@ For a different machine, add another entry under `homeConfigurations` in `flake.
 };
 ```
 
-Then `nix run home-manager/master -- switch --flake .#yourname`.
+Then `nix run home-manager/master -- switch --flake .#yourname -b backup`.
+
+### Without Nix (fallback)
+
+`./set-symboliclink.sh` creates the same symlinks via plain shell.
 
 ## Version Managers
 
