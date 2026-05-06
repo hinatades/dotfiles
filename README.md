@@ -1,6 +1,9 @@
 # dotfiles
 
-My macOS Dotfiles.
+macOS dotfiles managed by a [Nix Home Manager](https://github.com/nix-community/home-manager) flake.
+
+> [!NOTE]
+> Nix is required. The flake manages symlinks declaratively; CLI tools and casks are installed separately via Homebrew.
 
 ## Features
 
@@ -21,26 +24,59 @@ My macOS Dotfiles.
 - `wezterm/` - WezTerm terminal configuration with tmux-style keybindings
 - `hammerspoon/` - Hammerspoon window management configuration
 - `claude/` - Claude Code global settings (symlinked to `~/.claude/`)
-- `set-symboliclink.sh` - Setup script for creating symbolic links
+- `flake.nix` / `home.nix` / `flake.lock` - Home Manager flake managing symlinks declaratively
 
 ## Dropbox Sync
 
-This dotfiles setup syncs critical files across machines via Dropbox:
+`.zsh_history` and `.gitconfig` are synced across machines via Dropbox. These files are not managed by the flake — set them up manually after applying the flake:
 
-- `.zsh_history` - Command history sync
-- `.gitconfig` - Git configuration
-
-**Setup:** Place these files in `~/Dropbox/` before running the setup script. The script creates symlinks automatically.
+```sh
+ln -s ~/Dropbox/.zsh_history ~/.zsh_history
+ln -s ~/Dropbox/.gitconfig ~/.gitconfig
+```
 
 ## Installation
 
-### 1. Install Required Tools
+### 1. Install Nix
 
-Install the following with [Homebrew](https://brew.sh/):
+Recommended: [Determinate Nix Installer](https://github.com/DeterminateSystems/nix-installer).
+
+```sh
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+```
+
+If using the upstream installer instead, enable flakes manually:
+
+```sh
+mkdir -p ~/.config/nix
+echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
+```
+
+### 2. Clone the repository
+
+```sh
+ghq get https://github.com/hinatades/dotfiles.git
+cd $(ghq root)/github.com/hinatades/dotfiles
+```
+
+### 3. Apply the flake
+
+```sh
+nix run home-manager/master -- switch --flake .#hinatades -b backup
+```
+
+`-b backup` renames any pre-existing conflicting files (e.g. `~/.zshrc`) to `<name>.backup` instead of failing.
+
+The flake uses `mkOutOfStoreSymlink`, so symlinks point at the live repo — edits take effect without rebuild.
+
+### 4. Install CLI tools and casks (Homebrew)
+
+The flake manages symlinks only. Install runtime tools separately:
 
 ```sh
 brew install zsh zsh-autosuggestions neovim fzf ripgrep clang-format ghq gh kubectl starship d-kuro/tap/gwq
 brew install --cask wezterm hammerspoon
+brew install goenv pyenv nodebrew
 ```
 
 > [!NOTE]
@@ -49,28 +85,20 @@ brew install --cask wezterm hammerspoon
 > brew install tmux reattach-to-user-namespace
 > ```
 
-### 2. Install Version Managers
+### Adding another machine
 
-```sh
-brew install goenv pyenv nodebrew
+Add an entry under `homeConfigurations` in `flake.nix`:
+
+```nix
+"yourname" = mkHome {
+  system = "aarch64-darwin";    # or "x86_64-linux", etc.
+  username = "yourname";
+  homeDirectory = "/Users/yourname";
+  # optional: dotfilesPath = "/absolute/path/to/dotfiles";
+};
 ```
 
-### 3. Clone Repository
-
-Clone the repository with [ghq](https://github.com/x-motemen/ghq):
-
-```sh
-ghq get https://github.com/hinatades/dotfiles.git
-cd $(ghq root)/github.com/hinatades/dotfiles
-```
-
-### 4. Run Setup Script
-
-```sh
-./set-symboliclink.sh
-```
-
-This will create symbolic links for all configuration files.
+Then `nix run home-manager/master -- switch --flake .#yourname -b backup`.
 
 ## Version Managers
 
