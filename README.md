@@ -25,16 +25,15 @@ macOS dotfiles managed by a [Nix Home Manager](https://github.com/nix-community/
 - `hammerspoon/` - Hammerspoon window management configuration
 - `claude/` - Claude Code global settings (symlinked to `~/.claude/`)
 - `flake.nix` / `home.nix` / `flake.lock` - Home Manager flake managing symlinks declaratively
-- `set-symboliclink.sh` - Plain-shell fallback for environments without Nix
 
 ## Dropbox Sync
 
-This dotfiles setup syncs critical files across machines via Dropbox:
+`.zsh_history` and `.gitconfig` are synced across machines via Dropbox. These files are not managed by the flake — set them up manually after applying the flake:
 
-- `.zsh_history` - Command history sync
-- `.gitconfig` - Git configuration
-
-**Setup:** Place these files in `~/Dropbox/` before running the setup script. The script creates symlinks automatically.
+```sh
+ln -s ~/Dropbox/.zsh_history ~/.zsh_history
+ln -s ~/Dropbox/.gitconfig ~/.gitconfig
+```
 
 ## Installation
 
@@ -100,10 +99,6 @@ Add an entry under `homeConfigurations` in `flake.nix`:
 ```
 
 Then `nix run home-manager/master -- switch --flake .#yourname -b backup`.
-
-### Without Nix (fallback)
-
-`./set-symboliclink.sh` creates the same symlinks via plain shell.
 
 ## Version Managers
 
