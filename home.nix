@@ -8,6 +8,40 @@ in
   home.homeDirectory = homeDirectory;
   home.stateVersion = "24.11";
 
+  home.packages = with pkgs; [
+    bat
+    btop
+    clang-tools
+    cosign
+    eza
+    fd
+    fish
+    fzf
+    gh
+    ghq
+    htop
+    jq
+    kubectx
+    kustomize
+    neovim
+    nkf
+    reattach-to-user-namespace
+    ripgrep
+    ruff
+    silver-searcher
+    sops
+    starship
+    tmux
+    tree
+    uv
+    vim
+    yamlfmt
+    yq
+    zsh
+    zsh-autosuggestions
+    zsh-completions
+  ];
+
   home.file = {
     ".zshrc".source = link ".zshrc";
     ".tmux.conf".source = link ".tmux.conf";
