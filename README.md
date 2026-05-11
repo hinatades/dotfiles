@@ -69,21 +69,21 @@ nix run home-manager/master -- switch --flake .#hinatades -b backup
 
 The flake uses `mkOutOfStoreSymlink`, so symlinks point at the live repo — edits take effect without rebuild.
 
-### 4. Install CLI tools and casks (Homebrew)
+### 4. Install remaining tools (Homebrew)
 
-The flake manages symlinks only. Install runtime tools separately:
+Most CLI tools are managed by the flake (`home.packages` in `home.nix`). Homebrew is still used for:
+
+- **Casks** (GUI apps, fonts): WezTerm, Hammerspoon, fonts
+- **Version managers**: goenv / pyenv / nodebrew / tfenv (better suited to brew than Nix)
+- **Services**: `postgresql@14`, `redis`
+- **Custom taps** not in nixpkgs: `d-kuro/tap/gwq`, `argoproj/tap/kubectl-argo-rollouts`
+- **Broken in nixpkgs**: `jp2a`
 
 ```sh
-brew install zsh zsh-autosuggestions neovim fzf ripgrep clang-format ghq gh kubectl starship d-kuro/tap/gwq
 brew install --cask wezterm hammerspoon
-brew install goenv pyenv nodebrew
+brew install goenv pyenv nodebrew tfenv
+brew install d-kuro/tap/gwq jp2a
 ```
-
-> [!NOTE]
-> `tmux` and `reattach-to-user-namespace` are optional. Install them only if you prefer tmux over WezTerm's built-in pane management:
-> ```sh
-> brew install tmux reattach-to-user-namespace
-> ```
 
 ### Adding another machine
 
