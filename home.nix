@@ -23,6 +23,7 @@ in
     jq
     kubectx
     kustomize
+    mise
     neovim
     nkf
     reattach-to-user-namespace
@@ -55,6 +56,7 @@ in
     "nvim".source = link "nvim";
     "wezterm".source = link "wezterm";
     "starship.toml".source = link "starship.toml";
+    "mise/config.toml".source = link "mise/config.toml";
   };
 
   programs.home-manager.enable = true;
