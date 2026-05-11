@@ -25,20 +25,10 @@ eval "$(starship init zsh)"
 
 # Clangd
 export PATH="/usr/local/opt/llvm/bin:$PATH"
-# Node.js
-export PATH=$HOME/.nodebrew/current/bin:$PATH
-# Golang
-export GOENV_ROOT=$HOME/.goenv
-export PATH=$GOENV_ROOT/bin:$PATH
-GOENV_DISABLE_GOPATH=1
-eval "$(goenv init -)"
+# Language runtimes (managed by mise)
+eval "$(mise activate zsh)"
 export GOPATH=$HOME/.go
 export PATH=$GOPATH/bin:$PATH
-
-# Python
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/shims:$PATH"
-eval "$(pyenv init -)"
 # Poetry
 export PATH="$HOME/.local/bin:$PATH"
 

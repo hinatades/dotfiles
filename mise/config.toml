@@ -1,0 +1,11 @@
+[tools]
+go = "1.25.5"
+python = "3.14.2"
+node = "25.2.1"
+terraform = "1.14.3"
+
+[settings]
+idiomatic_version_file_enable_tools = ["python"]
+
+[env]
+GOPATH = "{{env.HOME}}/.go"

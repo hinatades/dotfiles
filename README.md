@@ -74,16 +74,16 @@ The flake uses `mkOutOfStoreSymlink`, so symlinks point at the live repo — edi
 Most CLI tools are managed by the flake (`home.packages` in `home.nix`). Homebrew is still used for:
 
 - **Casks** (GUI apps, fonts): WezTerm, Hammerspoon, fonts
-- **Version managers**: goenv / pyenv / nodebrew / tfenv (better suited to brew than Nix)
 - **Services**: `postgresql@14`, `redis`
 - **Custom taps** not in nixpkgs: `d-kuro/tap/gwq`, `argoproj/tap/kubectl-argo-rollouts`
 - **Broken in nixpkgs**: `jp2a`
 
 ```sh
 brew install --cask wezterm hammerspoon
-brew install goenv pyenv nodebrew tfenv
 brew install d-kuro/tap/gwq jp2a
 ```
+
+Language runtimes (Go / Python / Node.js / Terraform) are managed by [mise](https://mise.jdx.dev/) — see `mise/config.toml`.
 
 ### Adding another machine
 
@@ -100,11 +100,13 @@ Add an entry under `homeConfigurations` in `flake.nix`:
 
 Then `nix run home-manager/master -- switch --flake .#yourname -b backup`.
 
-## Version Managers
+## Language Runtimes
 
-- **Golang**: goenv
-- **Python**: pyenv
-- **Node.js**: nodebrew
+Managed declaratively via [mise](https://mise.jdx.dev/) (`mise/config.toml` → `~/.config/mise/config.toml`):
+
+- **Golang**, **Python**, **Node.js**, **Terraform**
+
+Override per project with `mise.toml` or `.tool-versions` in the project root.
 
 ## Key Features
 
