@@ -23,17 +23,12 @@ setopt hist_reduce_blanks
 # Starship prompt (oh-my-zsh simple theme replica)
 eval "$(starship init zsh)"
 
-# Clangd
-export PATH="/usr/local/opt/llvm/bin:$PATH"
 # Language runtimes (managed by mise)
 eval "$(mise activate zsh)"
 export GOPATH=$HOME/.go
 export PATH=$GOPATH/bin:$PATH
 # Poetry
 export PATH="$HOME/.local/bin:$PATH"
-
-# mysql
-export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 
 # Claude
 # export AWS_REGION=ap-northeast-1
@@ -213,15 +208,6 @@ alias e=exit
 #   tmux
 # fi
 export XDG_CONFIG_HOME=$HOME/.config
-export PATH="/usr/local/opt/libpq/bin:$PATH"
-
-# Google Cloud SDK
-if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then
-  . "$HOME/google-cloud-sdk/path.zsh.inc"
-fi
-if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then
-  . "$HOME/google-cloud-sdk/completion.zsh.inc"
-fi
 
 # LM Studio CLI
 export PATH="$PATH:$HOME/.lmstudio/bin"
