@@ -57,9 +57,9 @@ if command -v gwq &> /dev/null; then
     source <(gwq completion zsh)
 fi
 
-# zsh-autosuggestions (Homebrew version)
-if [ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
-  source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# zsh-autosuggestions (nix home-manager)
+if [ -f "$HOME/.nix-profile/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
+  source "$HOME/.nix-profile/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
   ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
 fi
 
