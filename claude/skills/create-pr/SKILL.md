@@ -27,7 +27,7 @@ Before creating a PR, check:
 Write the PR body with the following sections:
 
 1. **## Why** — Why this change is needed. Describe the problem or inconvenience that existed before.
-2. **## Changes** — What changed. Bullet points, concise.
+2. **## Changes** — What was done, at a coarse granularity. Each bullet should describe an *action and outcome* (one logical change per bullet), not a list of edited files or per-line details. Do not name specific files, directories, or paths — describe the change in terms of behavior, configuration, or intent. Several related edits across files collapse into one bullet.
 3. **## Notes** (optional) — Before/after comparisons, concrete values, or other context that helps the reviewer make a decision.
 
 ### Principles
