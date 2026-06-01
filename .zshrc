@@ -1,5 +1,12 @@
 export PATH=/usr/local/bin:$PATH
 
+# Nix
+# macOS upgrades overwrite /etc/zshrc and drop the nix-daemon block,
+# so source it here to survive OS updates.
+if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+  . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+fi
+
 # Zsh History Configuration
 # History file location (synced via Dropbox)
 HISTFILE=$HOME/.zsh_history
