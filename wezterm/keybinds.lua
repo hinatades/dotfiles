@@ -218,8 +218,8 @@ return {
 		-- Pane作成
 		{ key = "|", mods = "LEADER|SHIFT", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
 		{ key = "-", mods = "LEADER", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
-		-- Paneを閉じる leader + x
-		{ key = "x", mods = "LEADER", action = act({ CloseCurrentPane = { confirm = true } }) },
+		-- Paneを閉じる leader + x（確認なしで即座に破棄）
+		{ key = "x", mods = "LEADER", action = act({ CloseCurrentPane = { confirm = false } }) },
 		-- Pane移動 vim風
 		{ key = "h", mods = "LEADER", action = act.ActivatePaneDirection("Left") },
 		{ key = "l", mods = "LEADER", action = act.ActivatePaneDirection("Right") },
