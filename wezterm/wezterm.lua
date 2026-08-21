@@ -1,5 +1,9 @@
 local wezterm = require("wezterm")
+local agent_status = require("agent_status")
 local config = wezterm.config_builder()
+
+-- Claude Code のエージェント状態をステータスバーに集約表示
+agent_status.setup()
 
 config.automatically_reload_config = true
 config.font = wezterm.font("HackGen35 Console NF")
@@ -100,12 +104,19 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 		end
 	end
 
+	-- エージェント状態のインジケータ（該当ペインがあるタブのみ）
+	local state = agent_status.tab_state(tab)
+	local indicator = state and ("  " .. agent_status.states[state].icon) or ""
+	local indicator_color = state and agent_status.states[state].color or foreground
+
 	title = "   " .. wezterm.truncate_right(title, max_width - 1) .. "   "
 	return {
 		{ Background = { Color = edge_background } },
 		{ Foreground = { Color = edge_foreground } },
 		{ Text = SOLID_LEFT_ARROW },
 		{ Background = { Color = background } },
+		{ Foreground = { Color = indicator_color } },
+		{ Text = indicator },
 		{ Foreground = { Color = foreground } },
 		{ Text = title },
 		{ Background = { Color = edge_background } },

@@ -47,6 +47,48 @@
       "Bash(git clean -f:*)"
     ]
   },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/wezterm-agent-state.sh working"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/wezterm-agent-state.sh blocked"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/wezterm-agent-state.sh done"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/wezterm-agent-state.sh clear"
+          }
+        ]
+      }
+    ]
+  },
   "model": "opus[1m]",
   "enabledPlugins": {
     "aws-data-analytics@claude-plugins-official": true
