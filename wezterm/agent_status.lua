@@ -45,18 +45,21 @@ local function count_all()
 	return counts
 end
 
-function M.setup()
-	wezterm.on("update-status", function(window, _pane)
-		local counts = count_all()
-		local items = {}
-		for _, name in ipairs(ORDER) do
-			if counts[name] > 0 then
-				table.insert(items, { Foreground = { Color = M.states[name].color } })
-				table.insert(items, { Text = M.states[name].icon .. " " .. counts[name] .. "  " })
-			end
+-- 全ウィンドウ横断の件数を1行にまとめる（該当なしなら nil）。
+-- ステータスバーへの描画は keybinds.lua の update-right-status に集約しているため、
+-- ここでは文字列を返すだけにしてハンドラを二重登録しない。
+function M.summary()
+	local counts = count_all()
+	local parts = {}
+	for _, name in ipairs(ORDER) do
+		if counts[name] > 0 then
+			table.insert(parts, M.states[name].icon .. " " .. counts[name])
 		end
-		window:set_right_status(wezterm.format(items))
-	end)
+	end
+	if #parts == 0 then
+		return nil
+	end
+	return table.concat(parts, " ")
 end
 
 return M

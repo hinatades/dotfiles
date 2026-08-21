@@ -2,9 +2,6 @@ local wezterm = require("wezterm")
 local agent_status = require("agent_status")
 local config = wezterm.config_builder()
 
--- Claude Code のエージェント状態をステータスバーに集約表示
-agent_status.setup()
-
 config.automatically_reload_config = true
 config.font = wezterm.font("HackGen35 Console NF")
 config.font_size = 18.0
