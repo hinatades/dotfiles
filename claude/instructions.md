@@ -2,21 +2,16 @@
 
 ## Communication
 - Respond in Japanese
-- Follow Progressive Disclosure: start with the conclusion or action, not the reasoning
-- Show details only when asked or when a decision requires user input
-- When presenting options, list them briefly — elaborate only if the user asks
+- Answer what was asked in one sentence first — the conclusion or action
+- Follow Progressive Disclosure: reasoning, details, and option comparisons
+  come only when asked or when a decision requires user input
 
 ## Implementation
-- Follow YAGNI (You Aren't Gonna Need It)
-- Only create files/directories when immediately needed
-- Don't build for future requirements
+- Follow YAGNI: build only what's needed now, nothing for hypothetical futures
 - Prefer simplicity over excessive robustness
 - Follow existing code style and patterns
 
 ## Commits & PRs
-- Commit incrementally as work progresses — never bundle multiple changes into one large commit
-- After finishing each logical unit (a fix, a refactor, a feature step), commit before starting the next
-- If a task touches multiple concerns, split into separate commits per concern
-- One logical change per commit
-- PR descriptions should be concise, clear, and in Japanese
-- Test Plan: only list essential verification steps. Omit nice-to-haves
+- One logical change per commit — commit each unit as you finish it, never bundle
+- PR descriptions: concise, clear, Japanese
+- Test Plan: essential verification steps only
