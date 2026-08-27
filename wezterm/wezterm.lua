@@ -77,9 +77,11 @@ config.colors = {
 local SOLID_LEFT_ARROW = wezterm.nerdfonts.ple_lower_right_triangle
 -- タブの右側の装飾
 local SOLID_RIGHT_ARROW = wezterm.nerdfonts.ple_upper_left_triangle
+-- エージェント状態インジケータの背景（タブのアクティブ状態に依らず固定）
+local INDICATOR_BACKGROUND = "#1c2226"
 
 wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
-	local background = "#5c6d74"
+	local background = "#4d5b61"
 	local foreground = "#FFFFFF"
 	local edge_background = "none"
 	if tab.is_active then
@@ -101,25 +103,32 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 		end
 	end
 
-	-- エージェント状態のインジケータ（該当ペインがあるタブのみ）
-	local state = agent_status.tab_state(tab)
-	local indicator = state and ("  " .. agent_status.states[state].icon) or ""
-	local indicator_color = state and agent_status.states[state].color or foreground
-
 	title = "   " .. wezterm.truncate_right(title, max_width - 1) .. "   "
-	return {
+
+	local cells = {
 		{ Background = { Color = edge_background } },
 		{ Foreground = { Color = edge_foreground } },
 		{ Text = SOLID_LEFT_ARROW },
-		{ Background = { Color = background } },
-		{ Foreground = { Color = indicator_color } },
-		{ Text = indicator },
-		{ Foreground = { Color = foreground } },
-		{ Text = title },
-		{ Background = { Color = edge_background } },
-		{ Foreground = { Color = edge_foreground } },
-		{ Text = SOLID_RIGHT_ARROW },
 	}
+
+	-- エージェント状態のインジケータ（該当ペインがあるタブのみ）。
+	-- タブの背景色（特にアクティブ時の黄）と状態色が潰し合わないよう、
+	-- インジケータだけは常に固定の暗い背景に載せる。
+	local state = agent_status.tab_state(tab)
+	if state then
+		table.insert(cells, { Background = { Color = INDICATOR_BACKGROUND } })
+		table.insert(cells, { Foreground = { Color = agent_status.states[state].color } })
+		table.insert(cells, { Text = " " .. agent_status.states[state].icon .. " " })
+	end
+
+	table.insert(cells, { Background = { Color = background } })
+	table.insert(cells, { Foreground = { Color = foreground } })
+	table.insert(cells, { Text = title })
+	table.insert(cells, { Background = { Color = edge_background } })
+	table.insert(cells, { Foreground = { Color = edge_foreground } })
+	table.insert(cells, { Text = SOLID_RIGHT_ARROW })
+
+	return cells
 end)
 
 ----------------------------------------------------
