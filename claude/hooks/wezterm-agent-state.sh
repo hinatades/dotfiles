@@ -9,8 +9,37 @@
 state=$1
 [ "$state" = "clear" ] && state=""
 
-# 制御端末が無い場合（CI 等）は何もしない。2>/dev/null を先に置いてオープン失敗も黙らせる
-printf '\033]1337;SetUserVar=agent_state=%s\007' \
-	"$(printf '%s' "$state" | base64)" 2>/dev/null >/dev/tty
+payload=$(printf '%s' "$state" | base64)
+
+emit() {
+	printf '\033]1337;SetUserVar=agent_state=%s\007' "$payload"
+}
+
+# hook は制御端末を持たない子プロセスとして起動されるため /dev/tty が開けないことがある。
+# その場合は親プロセスを遡って claude 本体の tty（= WezTerm の pane pty）を探して書き込む。
+resolve_tty() {
+	pid=$$
+	depth=0
+	while [ "$pid" -gt 1 ] && [ "$depth" -lt 10 ]; do
+		name=$(ps -o tty= -p "$pid" 2>/dev/null | tr -d ' ')
+		case "$name" in
+		'' | '??' | '-') ;;
+		*)
+			printf '/dev/%s' "$name"
+			return 0
+			;;
+		esac
+		pid=$(ps -o ppid= -p "$pid" 2>/dev/null | tr -d ' ')
+		[ -n "$pid" ] || return 1
+		depth=$((depth + 1))
+	done
+	return 1
+}
+
+if : 2>/dev/null >/dev/tty; then
+	emit >/dev/tty
+else
+	target=$(resolve_tty) && [ -w "$target" ] && emit >"$target"
+fi
 
 exit 0
