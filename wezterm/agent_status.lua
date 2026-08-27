@@ -7,10 +7,11 @@ local M = {}
 -- 表示順 = 優先度（上ほど強い）
 local ORDER = { "blocked", "working", "done" }
 
+-- 色は暗い無彩色のタブ背景の上で識別できる明度に寄せてある
 M.states = {
-	blocked = { icon = "◉", color = "#d75f5f" },
-	working = { icon = "◐", color = "#ae8b2d" },
-	done = { icon = "✔", color = "#5faf5f" },
+	blocked = { icon = "◉", color = "#ff7b72" },
+	working = { icon = "◐", color = "#e3b341" },
+	done = { icon = "✔", color = "#3fb950" },
 }
 
 local rank = {}

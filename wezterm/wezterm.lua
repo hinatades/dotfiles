@@ -72,23 +72,21 @@ config.colors = {
 	},
 }
 
--- タブの形をカスタマイズ
--- タブの左側の装飾
-local SOLID_LEFT_ARROW = wezterm.nerdfonts.ple_lower_right_triangle
--- タブの右側の装飾
-local SOLID_RIGHT_ARROW = wezterm.nerdfonts.ple_upper_left_triangle
--- エージェント状態インジケータの背景（タブのアクティブ状態に依らず固定）
-local INDICATOR_BACKGROUND = "#1c2226"
+-- タブの見た目
+-- 状態インジケータ（赤/黄/緑）が沈まないよう、タブ自体は無彩色に寄せた濃淡だけで
+-- アクティブ/非アクティブを表す。装飾記号は使わず、余白で区切った矩形にする。
+local TAB_ACTIVE_BACKGROUND = "#39454e"
+local TAB_ACTIVE_FOREGROUND = "#ffffff"
+local TAB_INACTIVE_BACKGROUND = "#20272c"
+local TAB_INACTIVE_FOREGROUND = "#8b9aa4"
 
 wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
-	local background = "#4d5b61"
-	local foreground = "#FFFFFF"
-	local edge_background = "none"
+	local background = TAB_INACTIVE_BACKGROUND
+	local foreground = TAB_INACTIVE_FOREGROUND
 	if tab.is_active then
-		background = "#ae8b2d"
-		foreground = "#FFFFFF"
+		background = TAB_ACTIVE_BACKGROUND
+		foreground = TAB_ACTIVE_FOREGROUND
 	end
-	local edge_foreground = background
 
 	-- Get current working directory basename
 	local cwd = tab.active_pane.current_working_dir
@@ -102,31 +100,26 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 			title = path:match("([^/]+)/?$") or path
 		end
 	end
-
-	title = "   " .. wezterm.truncate_right(title, max_width - 1) .. "   "
+	title = wezterm.truncate_right(title, max_width - 6)
 
 	local cells = {
-		{ Background = { Color = edge_background } },
-		{ Foreground = { Color = edge_foreground } },
-		{ Text = SOLID_LEFT_ARROW },
+		-- タブ同士の間の余白（タブバーの地の色を見せる）
+		{ Background = { Color = "none" } },
+		{ Text = " " },
+		{ Background = { Color = background } },
 	}
 
-	-- エージェント状態のインジケータ（該当ペインがあるタブのみ）。
-	-- タブの背景色（特にアクティブ時の黄）と状態色が潰し合わないよう、
-	-- インジケータだけは常に固定の暗い背景に載せる。
+	-- エージェント状態のインジケータ（該当ペインがあるタブのみ）
 	local state = agent_status.tab_state(tab)
 	if state then
-		table.insert(cells, { Background = { Color = INDICATOR_BACKGROUND } })
 		table.insert(cells, { Foreground = { Color = agent_status.states[state].color } })
-		table.insert(cells, { Text = " " .. agent_status.states[state].icon .. " " })
+		table.insert(cells, { Text = " " .. agent_status.states[state].icon })
 	end
 
-	table.insert(cells, { Background = { Color = background } })
 	table.insert(cells, { Foreground = { Color = foreground } })
-	table.insert(cells, { Text = title })
-	table.insert(cells, { Background = { Color = edge_background } })
-	table.insert(cells, { Foreground = { Color = edge_foreground } })
-	table.insert(cells, { Text = SOLID_RIGHT_ARROW })
+	table.insert(cells, { Text = "  " .. title .. "  " })
+	table.insert(cells, { Background = { Color = "none" } })
+	table.insert(cells, { Text = " " })
 
 	return cells
 end)
