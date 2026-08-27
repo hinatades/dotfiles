@@ -135,9 +135,39 @@ Leader key: `Ctrl+b` (tmux-style)
 - `Leader + H/J/K/L`: Resize panes (expand current pane in direction)
 - `Leader + [`: Enter copy mode (for scrolling with `Ctrl+f/b/d/u`, exit with `q`)
 - `Leader + 3`: Create 3-pane preset layout
+- `Leader + c`: Create a new tab
+- `Leader + n/p`: Next / previous tab
+- `Cmd+1`..`Cmd+9`: Jump to tab by number
 
 > [!NOTE]
 > The included `.tmux.conf` uses the same `Ctrl+b` leader key and similar keybindings, so you can switch between WezTerm and tmux with minimal adjustment.
+
+### Parallel Coding Agents
+
+One worktree per task, one WezTerm tab per worktree:
+
+```sh
+gwq add -b feat/aaa          # create a worktree for the task
+Leader + c                   # open a new tab
+Ctrl+\                       # pick the worktree with fzf and cd into it
+claude                       # start the agent
+```
+
+Repeat for each task, then switch between them with `Cmd+1`..`Cmd+9` or `Leader + n/p`.
+
+Each tab shows the state of the Claude Code session running in it, so you can tell
+at a glance which one needs you without visiting every tab:
+
+| Indicator | State |
+| --- | --- |
+| `◐` yellow | Working |
+| `◉` red | Waiting for your approval |
+| `✔` green | Finished |
+
+The status bar shows the counts across all windows (e.g. `◉ 1  ◐ 2`). State is
+reported by Claude Code hooks (`claude/hooks/wezterm-agent-state.sh`) — no extra
+process or binary. Tabs are hidden when only one is open, so the indicator needs
+two or more tabs to be visible.
 
 ### Hammerspoon
 

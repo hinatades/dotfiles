@@ -1,5 +1,6 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
+local agent_status = require("agent_status")
 
 -- Cache for system stats (updated every 10 seconds)
 local system_stats_cache = {
@@ -100,6 +101,12 @@ wezterm.on("update-right-status", function(window, pane)
 		end
 
 		system_stats_cache.last_update = current_time
+	end
+
+	-- Claude Code agent states across all windows
+	local agents = agent_status.summary()
+	if agents then
+		table.insert(cells, agents)
 	end
 
 	-- Display cached CPU stats

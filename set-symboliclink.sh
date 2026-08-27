@@ -129,6 +129,14 @@ if [ -e $CLAUDE_SKILLS ] && [ ! -L $CLAUDE_SKILLS ]; then
 fi
 ln -f -s $SCRIPT_DIR/claude/skills $CLAUDE_SKILLS
 
+CLAUDE_HOOKS="$CLAUDE_DIR/hooks"
+if [ -e $CLAUDE_HOOKS ] && [ ! -L $CLAUDE_HOOKS ]; then
+    cp -r $CLAUDE_HOOKS "$CLAUDE_HOOKS.bak"
+    rm -r $CLAUDE_HOOKS
+    echo "Took a backup of $CLAUDE_HOOKS"
+fi
+ln -f -s $SCRIPT_DIR/claude/hooks $CLAUDE_HOOKS
+
 CLAUDE_INSTRUCTIONS="$CLAUDE_DIR/instructions.md"
 if [ -e $CLAUDE_INSTRUCTIONS ] && [ ! -L $CLAUDE_INSTRUCTIONS ]; then
     cp $CLAUDE_INSTRUCTIONS "$CLAUDE_INSTRUCTIONS.bak"

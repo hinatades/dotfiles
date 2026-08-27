@@ -49,6 +49,7 @@ in
     ".hammerspoon".source = link "hammerspoon";
     ".claude/settings.json".source = link "claude/settings.json";
     ".claude/skills".source = link "claude/skills";
+    ".claude/hooks".source = link "claude/hooks";
     ".claude/instructions.md".source = link "claude/instructions.md";
   };
 
