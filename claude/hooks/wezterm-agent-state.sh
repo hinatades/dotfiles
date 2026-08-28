@@ -3,6 +3,10 @@
 # WezTerm 側は wezterm/agent_status.lua が読み取ってタブ/ステータスバーに表示する。
 #
 # Usage: wezterm-agent-state.sh <working|blocked|done|clear>
+#
+# blocked は「ユーザーの操作待ち」だけに使う。Notification は matcher 無しだと
+# idle_prompt（応答完了後の放置通知）まで拾ってしまい、完了済みのタブが赤のまま
+# 残るため、settings.json 側で通知タイプを絞り込んでいる。
 
 [ -n "$WEZTERM_PANE" ] || exit 0
 

@@ -60,10 +60,20 @@
     ],
     "Notification": [
       {
+        "matcher": "permission_prompt|elicitation_dialog|elicitation_url_dialog|agent_needs_input",
         "hooks": [
           {
             "type": "command",
             "command": "$HOME/.claude/hooks/wezterm-agent-state.sh blocked"
+          }
+        ]
+      },
+      {
+        "matcher": "idle_prompt|agent_completed",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/wezterm-agent-state.sh done"
           }
         ]
       }
@@ -74,6 +84,26 @@
           {
             "type": "command",
             "command": "$HOME/.claude/hooks/wezterm-agent-state.sh done"
+          }
+        ]
+      }
+    ],
+    "StopFailure": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/wezterm-agent-state.sh blocked"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/wezterm-agent-state.sh clear"
           }
         ]
       }
