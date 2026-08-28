@@ -92,5 +92,7 @@
   "model": "opus[1m]",
   "enabledPlugins": {
     "aws-data-analytics@claude-plugins-official": true
-  }
+  },
+  "theme": "dark",
+  "tui": "fullscreen"
 }
