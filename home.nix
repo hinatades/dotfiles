@@ -50,7 +50,7 @@ in
     ".claude/settings.json".source = link "claude/settings.json";
     ".claude/skills".source = link "claude/skills";
     ".claude/hooks".source = link "claude/hooks";
-    ".claude/instructions.md".source = link "claude/instructions.md";
+    ".claude/CLAUDE.md".source = link "claude/CLAUDE.md";
   };
 
   xdg.configFile = {

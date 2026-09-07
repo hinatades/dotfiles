@@ -137,13 +137,13 @@ if [ -e $CLAUDE_HOOKS ] && [ ! -L $CLAUDE_HOOKS ]; then
 fi
 ln -f -s $SCRIPT_DIR/claude/hooks $CLAUDE_HOOKS
 
-CLAUDE_INSTRUCTIONS="$CLAUDE_DIR/instructions.md"
-if [ -e $CLAUDE_INSTRUCTIONS ] && [ ! -L $CLAUDE_INSTRUCTIONS ]; then
-    cp $CLAUDE_INSTRUCTIONS "$CLAUDE_INSTRUCTIONS.bak"
-    rm $CLAUDE_INSTRUCTIONS
-    echo "Took a backup of $CLAUDE_INSTRUCTIONS"
+CLAUDE_MD="$CLAUDE_DIR/CLAUDE.md"
+if [ -e $CLAUDE_MD ] && [ ! -L $CLAUDE_MD ]; then
+    cp $CLAUDE_MD "$CLAUDE_MD.bak"
+    rm $CLAUDE_MD
+    echo "Took a backup of $CLAUDE_MD"
 fi
-ln -f -s $SCRIPT_DIR/claude/instructions.md $CLAUDE_INSTRUCTIONS
+ln -f -s $SCRIPT_DIR/claude/CLAUDE.md $CLAUDE_MD
 
 # Install gwq (Git Worktree Manager)
 if command -v brew &> /dev/null; then
